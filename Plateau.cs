@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Scrabble
 {
-    class Sac_Jetons
+    class Plateau
     {
 
-        
     }
 }

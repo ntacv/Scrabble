@@ -9,6 +9,15 @@ namespace Scrabble
         {
             Console.WriteLine("Scrabble!");
 
+            Dictionnaire dicho = new Dictionnaire("Francais");
+            Console.WriteLine(dicho.ToString());
+
+            Joueur nathan = new Joueur("nathan");
+
+            Console.WriteLine(nathan.ToString());
+
+            Console.WriteLine(dicho.RechDichoRecursif("bat"));
+
             /*
             string path = "../../../Files/joueurs.txt";
             if (File.Exists(path))
@@ -29,9 +38,7 @@ namespace Scrabble
             }
 
             */
-            Joueur nathan = new Joueur("nathan");
 
-            Console.WriteLine(nathan.ToString());
         }
     }
 }
