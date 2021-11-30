@@ -11,6 +11,7 @@ namespace Scrabble
         string nom;
         int score;
         List<string> mots;
+        List<Jeton> Main_Courante;
 
         //Constructeur
         public Joueur(string nom)
@@ -18,6 +19,7 @@ namespace Scrabble
             this.nom = nom;
             score = 0;
             mots = null;
+            Main_Courante = new List<Jeton> { };
         }
         public Joueur(string nom, int score, List<string> mots)
         {
@@ -54,6 +56,13 @@ namespace Scrabble
                     txt += mots[i];
                 }
             }
+            if (Main_Courante != null && Main_Courante.Count != 0)
+            {
+                for (int i = 0; i < Main_Courante.Count; i++)
+                {
+                    txt += Main_Courante[i];
+                }
+            }
 
             return txt;
         }
@@ -70,15 +79,24 @@ namespace Scrabble
                 score += val;
             }
         }
-        /*
+        
         public void Add_Main_Courante(Jeton monjeton)
         {
-
+            if(Main_Courante!=null && Main_Courante.Count != 0)
+            {
+                for(int i=0; i < Main_Courante.Count; i++)
+                {
+                    if (Main_Courante[i] == null)
+                    {
+                        //Main_Courante[i] = Retire_Jeton();
+                    }
+                }
+            }
         }
         public void Remove_Main_Courante(Jeton monjeton)
         {
 
         }
-        */
+        
     }
 }
