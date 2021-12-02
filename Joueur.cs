@@ -14,8 +14,9 @@ namespace Scrabble
         List<Jeton> Main_Courante;
 
         //Constructeur
-        public Joueur(string nom)
+        public Joueur()
         {
+            string nom = Program.VerifieString("Veuillez saisir un nom : ");
             this.nom = nom;
             score = 0;
             mots = null;
@@ -48,19 +49,19 @@ namespace Scrabble
 
         public override string ToString()
         {
-            string txt = nom + " ; " + score + " ; ";
+            string txt = nom + " ; " + score + " ;\n";
             if(mots!=null && mots.Count != 0)
             {
                 for(int i = 0; i < mots.Count; i++)
                 {
-                    txt += mots[i];
+                    txt += mots[i]+" ; ";
                 }
             }
             if (Main_Courante != null && Main_Courante.Count != 0)
             {
                 for (int i = 0; i < Main_Courante.Count; i++)
                 {
-                    txt += Main_Courante[i];
+                    txt += Main_Courante[i].Lettre + " ; ";
                 }
             }
 
@@ -70,7 +71,10 @@ namespace Scrabble
 
         public void Add_Mot(string mot)
         {
-            mots.Add(mot);
+            if (mot != null && mot.Length != 0)
+            {
+                mots.Add(mot);
+            }
         }
         public void Add_Score(int val)
         {

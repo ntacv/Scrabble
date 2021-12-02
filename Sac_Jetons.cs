@@ -27,7 +27,6 @@ namespace Scrabble
                 {
                     string[] line = allJetons[i].Split(';');
                     sac[i] = new Jeton( Convert.ToChar(line[0]), Convert.ToInt32(line[1]), Convert.ToInt32(line[2]));
-                        
                 }
                 for (int i = 0; i < sac.Length; i++)
                 {
@@ -49,23 +48,46 @@ namespace Scrabble
         public Jeton Retire_Jeton(Random r)
         {
             Jeton jeton=null;
-            
-            int rdm = r.Next(0, this.total);
-            int nbr = 0;
-            for (int i = 0; i < sac.Length; i++)
+            if (total != 1)
             {
-                nbr += sac[i].Nombre;
-                if (rdm <= nbr)//manque la limite apres une valeur a 0
+                int rdm = r.Next(total + 1);
+                int nbr = 0;
+                for (int i = 0; i < sac.Length; i++)
                 {
-                    jeton = sac[i];
-                    jeton.Retire();
-                    break;
+                    nbr += sac[i].Nombre;
+                    if (rdm <= nbr)
+                    {
+                        jeton = sac[i];
+                        jeton.Retire();
+                        break;
+                    }
+                }
+                CalculTotal();
+            }
+            else
+            {
+                for (int i = 0; i < sac.Length; i++)
+                {
+                    if (sac[i].Nombre != 0)
+                    {
+                        jeton = sac[i];
+                        jeton.Retire();
+                        break;
+                    }
                 }
             }
-            total--;
             return jeton;
         }
 
+        public void CalculTotal()
+        {
+            int total=0;
+            for (int i = 0; i < sac.Length; i++)
+            {
+                total += sac[i].Nombre;
+            }
+            this.total = total;
+        }
 
 
     }

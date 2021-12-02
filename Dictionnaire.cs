@@ -12,6 +12,11 @@ namespace Scrabble
         string langue;
         SortedList<int, string[]> dicho;
 
+        public SortedList<int, string[]> Dicho
+        {
+            get { return dicho; }
+        }
+
         public Dictionnaire(string langue)
         {
             if (langue != null && langue.Length != 0)
@@ -27,8 +32,6 @@ namespace Scrabble
                     {
                         dicho.Add(Convert.ToInt32(allDicho[2*i]), allDicho[2*i + 1].Split(' '));
                     }
-
-
                 }
             }
         }
@@ -36,7 +39,7 @@ namespace Scrabble
 
         public override string ToString()
         {
-            string txt = "Langue = " + langue+"\n";
+            string txt = "Langue : " + langue+"\n";
             if(dicho!=null && dicho.Count != 0)
             {
                 for (int i = 0; i < dicho.Count; i++)
@@ -47,10 +50,36 @@ namespace Scrabble
             return txt;
         }
 
-        public bool RechDichoRecursif(string mot)
+        public bool RechDichoRecursif(string mot, int debut, int fin)
         {
             bool exist = false;
+            mot = mot.ToUpper();
+            int key = mot.Length;
+            int index = dicho.IndexOfKey(key);
 
+            int milieu = (debut + fin) / 2;
+
+            if(fin < debut)
+            {
+                return exist;
+            }
+            if(dicho[index][milieu] == mot)
+            {
+                return true;
+            }
+            else
+            {
+                for (int i = 0; i < key; i++)
+                {
+                    if (dicho[index][milieu][i] > mot[i])
+                    {
+                        return RechDichoRecursif(mot, debut, milieu - 1);
+                    }
+                    else return RechDichoRecursif(mot, milieu + 1, fin);
+                }
+            }
+
+            /*
             if(dicho!=null && dicho.Count != 0 && mot!=null && mot.Length>=2 && mot.Length<=5)
             {
                 mot = mot.ToUpper();
@@ -62,9 +91,10 @@ namespace Scrabble
                     if(mot == dicho.Values[index][i])
                     {
                         exist = true;
+                        break;
                     }
                 }
-            }
+            }*/
 
 
             return exist;

@@ -32,6 +32,8 @@ namespace Scrabble
 
         public override string ToString()
         {
+            //affiche coord ligne col
+
             string txt = "Plateau : \n";
             if (plateau != null && plateau.Length != 0)
             {
