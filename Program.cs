@@ -7,8 +7,9 @@ namespace Scrabble
     {
         static void Main(string[] args)
         {
+            Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("Scrabble!");
-
+            Console.ResetColor();
             Dictionnaire dicho = new Dictionnaire("Francais");
             Console.WriteLine(dicho.ToString());
 
