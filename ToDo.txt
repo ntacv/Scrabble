@@ -4,10 +4,13 @@ Continuer sauvegarde ? (création d'une méthode qui rappelle tt les constructeu
 sac de jeton à 0
 reset du plateau 
 définir les joueurs (nom + nombres + main courente)
-
+Lorsque l'on rentre un mot , verrification sui il n'y à pas de chiffres 
+calcul du score 
+prise en compte des score spétiaux (mot x2 /mot x3)
 
 
 A faire:
 
 boucle sans fin pour retirer tout les jetons
 revoir la méthode de recherche dichoRecusrive
+ 
