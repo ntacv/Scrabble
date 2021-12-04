@@ -11,4 +11,3 @@ A faire:
 
 boucle sans fin pour retirer tout les jetons
 revoir la méthode de recherche dichoRecusrive
-
