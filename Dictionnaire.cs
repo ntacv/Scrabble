@@ -58,25 +58,38 @@ namespace Scrabble
             int index = dicho.IndexOfKey(key);
 
             int milieu = (debut + fin) / 2;
+            Console.Write(dicho[key][milieu] + " ; "+milieu+"   ");
 
             if(fin < debut)
             {
                 return exist;
             }
-            if(dicho[index][milieu] == mot)
+            if(dicho[key][milieu] == mot)
             {
                 return true;
             }
             else
             {
+                bool motSupMid = true;
+                bool motInfMid = true;
                 for (int i = 0; i < key; i++)
-                {
-                    if (dicho[index][milieu][i] > mot[i])
+                { 
+                    if(mot[i] > dicho[key][milieu][i])
                     {
-                        return RechDichoRecursif(mot, debut, milieu - 1);
+                        motSupMid = false;
                     }
-                    else return RechDichoRecursif(mot, milieu + 1, fin);
+                    if(mot[i] < dicho[key][milieu][i])
+                    {
+                        motInfMid = false;
+                    }
                 }
+                if (!motSupMid && motInfMid)
+                {
+                    //mot inférieur au mot milieu
+                    return RechDichoRecursif(mot, debut, milieu - 1);
+                }
+                else return RechDichoRecursif(mot, milieu + 1, fin);
+                
             }
 
             /*

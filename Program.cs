@@ -34,13 +34,14 @@ namespace Scrabble
             Joueur nathan = new Joueur();
             Console.WriteLine(nathan.ToString());
 
-            string mot = "aa";
+            string mot = "ex";
             int key = mot.Length;
             int index = dicho.Dicho.IndexOfKey(key);
-            //Console.WriteLine(dicho.RechDichoRecursif(mot, 0, dicho.Dicho[index].Length));
+            //Console.WriteLine(dicho.RechDichoRecursif(mot, 0, dicho.Dicho[key].Length-1));
 
-            Plateau Plateau = new Plateau();
-            
+            Plateau Plateau = new Plateau(' ');
+            Console.WriteLine(Plateau);
+            Plateau.ToStringColor();
 
 
         }
