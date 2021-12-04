@@ -17,6 +17,7 @@ namespace Scrabble
         3 : mot triple
         4 : lettre double
         5 : lettre triple
+        A-Z* : Jetons
 
         */
         public Plateau(char car)
@@ -80,6 +81,7 @@ namespace Scrabble
         public void ToStringColor()
         {
             Console.Write("Plateau : \n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             if (plateau != null && plateau.Length != 0)
             {
                 for (int i = 0; i < plateau.GetLength(0); i++)
@@ -97,10 +99,10 @@ namespace Scrabble
                                 Console.BackgroundColor = ConsoleColor.Green;
                                 break;
                             case '2':
-                                Console.BackgroundColor = ConsoleColor.Yellow;
+                                Console.BackgroundColor = ConsoleColor.Magenta;
                                 break;
                             case '3':
-                                Console.BackgroundColor = ConsoleColor.Red;
+                                Console.BackgroundColor = ConsoleColor.DarkRed;
                                 break;
                             case '4':
                                 Console.BackgroundColor = ConsoleColor.Cyan;
@@ -109,7 +111,7 @@ namespace Scrabble
                                 Console.BackgroundColor = ConsoleColor.DarkCyan;
                                 break;
                             default:
-                                Console.ResetColor();
+                                Console.BackgroundColor = ConsoleColor.Yellow;
                                 break;
                         }
                         Console.Write("  ");
@@ -119,6 +121,7 @@ namespace Scrabble
                 }
             }
             else Console.Write("null");
+            Console.ResetColor();
         }
 
     }
