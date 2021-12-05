@@ -10,6 +10,11 @@ namespace Scrabble
             Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("Scrabble!");
             Console.ResetColor();
+
+            bool init = AskSaves();
+
+
+
             Dictionnaire dicho = new Dictionnaire("Francais");
             Console.WriteLine(dicho.ToString());
 
@@ -60,6 +65,43 @@ namespace Scrabble
             return txt;
         }
 
+        public static bool AskSaves()
+        {
+            bool init = false;
+
+            //ask language
+
+            //ask init or save
+            string[] menu = new string[2] { "Commencer", "Reprendre" };
+            ConsoleKey inputKey;
+            int index = 0;
+            do
+            {
+                Console.Clear();
+                inputKey = Console.ReadKey().Key;
+                if (inputKey == ConsoleKey.DownArrow && index<menu.Length)//40 : Down arrow key
+                {
+                    index++;
+                }
+                if(inputKey == ConsoleKey.UpArrow && index>0)//38 : Up arrow key
+                {
+                    index--;
+                }
+
+                for (int i = 0; i < menu.Length; i++)
+                {
+                    if (i == index) {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                    }
+                    Console.WriteLine(menu[i] + " une partie");
+                    Console.ResetColor();
+                }
+            } while (inputKey!=ConsoleKey.Enter);
+
+
+            return init;
+        }
 
     }
 }
