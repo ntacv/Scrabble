@@ -14,3 +14,7 @@ A faire:
 boucle sans fin pour retirer tout les jetons
 revoir la méthode de recherche dichoRecusrive
  
+
+
+En plus
+Class de sauvegardes, affichage liste de sauvegarde pour choisir laquelle avec pourcentage, affichage tableau?
