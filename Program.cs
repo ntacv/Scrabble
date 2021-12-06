@@ -12,7 +12,7 @@ namespace Scrabble
             Console.ResetColor();
 
             bool init = AskSaves();
-
+            int indexLang = AskLanguage();
 
 
             Dictionnaire dicho = new Dictionnaire("Francais");
@@ -65,42 +65,59 @@ namespace Scrabble
             return txt;
         }
 
+        public static int AskLanguage()
+        {
+            string[] menu = new string[] { "Francais", "English", "Español" };
+
+            int index = Menu(menu);
+            
+            return index;
+        }
+
         public static bool AskSaves()
         {
             bool init = false;
 
-            //ask language
-
             //ask init or save
             string[] menu = new string[2] { "Commencer", "Reprendre" };
+
+            int index = Menu(menu);
+            if (index == 0) init = true;
+
+            return init;
+        }
+
+
+        public static int Menu(string[] menu)
+        {
             ConsoleKey inputKey;
             int index = 0;
             do
             {
                 Console.Clear();
+
+                for (int i = 0; i < menu.Length; i++)
+                {
+                    if (i == index)
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                    }
+                    Console.WriteLine(menu[i]);
+                    Console.ResetColor();
+                }
                 inputKey = Console.ReadKey().Key;
-                if (inputKey == ConsoleKey.DownArrow && index<menu.Length)//40 : Down arrow key
+                if (inputKey == ConsoleKey.DownArrow && index < menu.Length - 1)//40 : Down arrow key
                 {
                     index++;
                 }
-                if(inputKey == ConsoleKey.UpArrow && index>0)//38 : Up arrow key
+                if (inputKey == ConsoleKey.UpArrow && index > 0)//38 : Up arrow key
                 {
                     index--;
                 }
 
-                for (int i = 0; i < menu.Length; i++)
-                {
-                    if (i == index) {
-                        Console.BackgroundColor = ConsoleColor.White;
-                        Console.ForegroundColor = ConsoleColor.Black;
-                    }
-                    Console.WriteLine(menu[i] + " une partie");
-                    Console.ResetColor();
-                }
-            } while (inputKey!=ConsoleKey.Enter);
-
-
-            return init;
+            } while (inputKey != ConsoleKey.Enter);
+            return index;
         }
 
     }
