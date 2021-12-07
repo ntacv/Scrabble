@@ -16,16 +16,30 @@ namespace Scrabble
         Plateau monplateau;
         Sac_Jetons monsac_jetons;
 
-        //1er mot sur la case central
 
 
+        public Jeu()
+        {
 
-        //place mot : mot//coordonnees//Hori/Vertical
-
-        
-
+        }
 
         
+
+        public void StartGame(bool init, int lang)
+        {
+
+        }
+        
+        public bool PlaceWord()
+        {
+            bool possible = false;
+
+            //1er mot sur la case central
+
+            //place mot : mot//coordonnees//Hori/Vertical
+
+            return possible;
+        }
 
     }
 }

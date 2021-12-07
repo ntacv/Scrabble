@@ -22,3 +22,12 @@ revoir la méthode de recherche dichoRecusrive
 
 En plus
 Class de sauvegardes, affichage liste de sauvegarde pour choisir laquelle avec pourcentage, affichage tableau?
+
+
+repiocher lettre manquante 
+Confirmer choix avec score(review)
+calcul score
+mot donné soit possible 
+demander position/direction
+demander mot 
+debut du tour
