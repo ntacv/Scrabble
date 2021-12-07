@@ -10,46 +10,37 @@ namespace Scrabble
             Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("Scrabble!");
             Console.ResetColor();
-            //test
+
+
+            Jeu JeuTest = new Jeu();
+            JeuTest.PlaceWord();
+            /*
 
             bool init = AskSaves();
             int indexLang = AskLanguage();
 
 
-            Dictionnaire dicho = new Dictionnaire("Francais");
-            Console.WriteLine(dicho.ToString());
 
             Sac_Jetons Sac = new Sac_Jetons();
             Console.WriteLine(Sac.ToString());
             Random r = new Random();
-            for (int i = 0; i < 102; i++)
-            {
-                Jeton newOne = Sac.Retire_Jeton(r);
-                //Console.WriteLine(newOne.ToString());
-            }
-            /*
             do
             {
                 Jeton newOne = Sac.Retire_Jeton(r);
                 Console.WriteLine(newOne.ToString());
             } while (Sac.Total != 0);
-            */
+            //Console.WriteLine(Sac.ToString() + "\n total : " + Sac.Total);
 
-            Console.WriteLine(Sac.ToString() + "\n total : " + Sac.Total); ;
-
-            Joueur nathan = new Joueur();
-            Console.WriteLine(nathan.ToString());
-
+            Dictionnaire Dicho = new Dictionnaire("Francais");
             string mot = "ex";
             int key = mot.Length;
-            int index = dicho.Dicho.IndexOfKey(key);
-            //Console.WriteLine(dicho.RechDichoRecursif(mot, 0, dicho.Dicho[key].Length-1));
+            int index = Dicho.MotsTrie.IndexOfKey(key);
+            //Console.WriteLine(dicho.RechDichoRecursif(mot, 0, Dicho.MotsTrie[key].Length-1));
 
             Plateau Plateau = new Plateau(' ');
-            Console.WriteLine(Plateau);
             Plateau.ToStringColor();
-
-
+            */
+            
         }
 
 

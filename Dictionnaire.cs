@@ -10,11 +10,11 @@ namespace Scrabble
     {
 
         string langue;
-        SortedList<int, string[]> dicho;
+        SortedList<int, string[]> motsTrie;
 
-        public SortedList<int, string[]> Dicho
+        public SortedList<int, string[]> MotsTrie
         {
-            get { return dicho; }
+            get { return motsTrie; }
         }
 
         public Dictionnaire(string langue)
@@ -25,12 +25,12 @@ namespace Scrabble
                 if (File.Exists(path))
                 {
                     this.langue = langue;
-                    this.dicho = new SortedList<int, string[]> { };
+                    this.motsTrie = new SortedList<int, string[]> { };
                     string[] allDicho = File.ReadAllLines(path);
 
                     for(int i = 0; i < allDicho.Length/2; i++)
                     {
-                        dicho.Add(Convert.ToInt32(allDicho[2*i]), allDicho[2*i + 1].Split(' '));
+                        motsTrie.Add(Convert.ToInt32(allDicho[2*i]), allDicho[2*i + 1].Split(' '));
                     }
                 }
             }
@@ -40,11 +40,11 @@ namespace Scrabble
         public override string ToString()
         {
             string txt = "Langue : " + langue+"\n";
-            if(dicho!=null && dicho.Count != 0)
+            if(motsTrie!=null && motsTrie.Count != 0)
             {
-                for (int i = 0; i < dicho.Count; i++)
+                for (int i = 0; i < motsTrie.Count; i++)
                 {
-                    txt += dicho.Keys[i]+" : "+dicho.Values[i].Length+", \n";
+                    txt += motsTrie.Keys[i]+" : "+motsTrie.Values[i].Length+", \n";
                 }
             }
             return txt;
@@ -55,16 +55,16 @@ namespace Scrabble
             bool exist = false;
             mot = mot.ToUpper();
             int key = mot.Length;
-            int index = dicho.IndexOfKey(key);
+            int index = motsTrie.IndexOfKey(key);
 
             int milieu = (debut + fin) / 2;
-            Console.Write(dicho[key][milieu] + " ; "+milieu+"   ");
+            Console.Write(motsTrie[key][milieu] + " ; "+milieu+"   ");
 
             if(fin < debut)
             {
                 return exist;
             }
-            if(dicho[key][milieu] == mot)
+            if(motsTrie[key][milieu] == mot)
             {
                 return true;
             }
@@ -74,11 +74,11 @@ namespace Scrabble
                 bool motInfMid = true;
                 for (int i = 0; i < key; i++)
                 { 
-                    if(mot[i] > dicho[key][milieu][i])
+                    if(mot[i] > motsTrie[key][milieu][i])
                     {
                         motSupMid = false;
                     }
-                    if(mot[i] < dicho[key][milieu][i])
+                    if(mot[i] < motsTrie[key][milieu][i])
                     {
                         motInfMid = false;
                     }
@@ -92,26 +92,30 @@ namespace Scrabble
                 
             }
 
-            /*
-            if(dicho!=null && dicho.Count != 0 && mot!=null && mot.Length>=2 && mot.Length<=5)
+            return exist;
+        }
+
+        public bool RechFor(string mot)
+        {
+            bool exist = false;
+            if (motsTrie != null && motsTrie.Count != 0 && mot != null && mot.Length >= 2 && mot.Length <= 5)
             {
                 mot = mot.ToUpper();
                 int key = mot.Length;
-                int index = dicho.IndexOfKey(key);
-                
-                for(int i=0;i< dicho.Values[index].Length ; i++)
+                int index = motsTrie.IndexOfKey(key);
+
+                for (int i = 0; i < motsTrie.Values[index].Length; i++)
                 {
-                    if(mot == dicho.Values[index][i])
+                    if (mot == motsTrie.Values[index][i])
                     {
                         exist = true;
                         break;
                     }
                 }
-            }*/
-
-
+            }
             return exist;
         }
+
 
     }
 }
