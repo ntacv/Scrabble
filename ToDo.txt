@@ -1,3 +1,7 @@
+Scrabble game project
+
+Nathan and Clément
+
 étapes :
 
 Continuer sauvegarde ? (création d'une méthode qui rappelle tt les constructeurs + définnition du temps de partie)

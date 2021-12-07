@@ -119,6 +119,6 @@ namespace Scrabble
             } while (inputKey != ConsoleKey.Enter);
             return index;
         }
-
+        
     }
 }
