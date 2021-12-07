@@ -10,6 +10,7 @@ namespace Scrabble
             Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("Scrabble!");
             Console.ResetColor();
+            //test
 
             bool init = AskSaves();
             int indexLang = AskLanguage();
