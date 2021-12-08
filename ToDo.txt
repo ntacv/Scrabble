@@ -25,6 +25,14 @@ En plus
 Class de sauvegardes, affichage liste de sauvegarde pour choisir laquelle avec pourcentage, affichage tableau?
 
 
+Choix1:
+Case coloré, deplacmeent ak fleches
+Rentrer une lettre pour la placer (tavleau de lettre placée)
+Verifier mm ligne
+Enter pour verifier et calculer score
+
+
+Choix2
 repiocher lettre manquante 
 Confirmer choix avec score(review)
 calcul score
