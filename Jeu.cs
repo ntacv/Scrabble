@@ -165,6 +165,15 @@ namespace Scrabble
 
             //return possible;
         }
+        
+        public void Cursor()
+        {
+            //clignote
+
+            //deplace
+
+            
+        }
 
         public string JoueurToString()
         {

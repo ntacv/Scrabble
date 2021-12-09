@@ -11,7 +11,7 @@ namespace Scrabble
             Console.WriteLine("Scrabble!");
             Console.ResetColor();
             //Console.WindowHeight = 480;
-            //Console.SetWindowSize(100,100);
+            Console.SetWindowSize(60,30);
 
 
             Jeu JeuTest = new Jeu();
