@@ -14,13 +14,16 @@ namespace Scrabble
         {
             get { return total; }
         }
-
-        public Sac_Jetons()
+        public Jeton[] Sac
         {
-            string path = "../../../Files/Jetons.txt";
-            if (File.Exists(path))
+            get { return sac; }
+        }
+
+        public Sac_Jetons(string content)
+        {
+            if (content!=null && content.Length!=0)
             {
-                string[] allJetons = File.ReadAllLines(path);
+                string[] allJetons = content.Split("\r\n");
                 this.sac = new Jeton[27];
 
                 for (int i = 0; i < allJetons.Length; i++)
@@ -88,7 +91,18 @@ namespace Scrabble
             }
             this.total = total;
         }
-
+        public Jeton InfoJeton(char lettre)
+        {
+            Jeton jeton = new Jeton('$',0,0) ;
+            for(int i = 0; i < sac.Length; i++)
+            {
+                if(sac[i].Lettre == lettre)
+                {
+                    jeton = sac[i];
+                }
+            }
+            return jeton;
+        }
 
     }
 }

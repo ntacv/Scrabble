@@ -17,6 +17,13 @@ namespace Scrabble
             this.score = score;
             this.nombre = nombre;
         }
+        public Jeton(char lettre)
+        {
+            this.lettre = lettre;
+
+            
+
+        }
         
         public char Lettre
         {

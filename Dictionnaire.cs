@@ -58,7 +58,7 @@ namespace Scrabble
             int index = motsTrie.IndexOfKey(key);
 
             int milieu = (debut + fin) / 2;
-            Console.Write(motsTrie[key][milieu] + " ; "+milieu+"   ");
+            //Console.Write(motsTrie[key][milieu] + " ; "+milieu+"   ");
 
             if(fin < debut)
             {
@@ -70,8 +70,20 @@ namespace Scrabble
             }
             else
             {
+
+                if (mot.CompareTo(motsTrie[key][milieu]) == -1)
+                {
+                    return RechDichoRecursif(mot, debut, milieu - 1);
+                }
+                else
+                {
+                    return RechDichoRecursif(mot, milieu + 1, fin);
+                }
+
+                /*
                 bool motSupMid = true;
                 bool motInfMid = true;
+                
                 for (int i = 0; i < key; i++)
                 { 
                     if(mot[i] > motsTrie[key][milieu][i])
@@ -89,7 +101,7 @@ namespace Scrabble
                     return RechDichoRecursif(mot, debut, milieu - 1);
                 }
                 else return RechDichoRecursif(mot, milieu + 1, fin);
-                
+                */
             }
 
             return exist;

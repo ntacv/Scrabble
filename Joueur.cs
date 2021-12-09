@@ -11,7 +11,9 @@ namespace Scrabble
         string nom;
         int score;
         List<string> mots;
-        List<Jeton> Main_Courante;
+        List<Jeton> main_Courante;
+
+        
 
         //Constructeur
         public Joueur()
@@ -20,13 +22,14 @@ namespace Scrabble
             this.nom = nom;
             score = 0;
             mots = null;
-            Main_Courante = new List<Jeton> { };
+            main_Courante = new List<Jeton> { };
         }
-        public Joueur(string nom, int score, List<string> mots)
+        public Joueur(string nom, int score, List<string> mots, List<Jeton> Main)
         {
             this.nom = nom;
             this.score = score;
             this.mots = mots;
+            this.main_Courante = Main;
         }
         /// <summary>
         /// définie les joueurs a partir d'un tableau de joueurs;
@@ -57,17 +60,35 @@ namespace Scrabble
                     txt += mots[i]+" ; ";
                 }
             }
-            if (Main_Courante != null && Main_Courante.Count != 0)
+            if (main_Courante != null && main_Courante.Count != 0)
             {
-                for (int i = 0; i < Main_Courante.Count; i++)
+                for (int i = 0; i < main_Courante.Count; i++)
                 {
-                    txt += Main_Courante[i].Lettre + " ; ";
+                    txt += main_Courante[i].Lettre + " ; ";
                 }
             }
 
             return txt;
         }
+        public string ToStringShort()
+        {
+            string txt = nom + " " + score;
+            return txt;
+        }
+        public string ToStringGame()
+        {
+            string txt = nom + " ; " + score + " ;\n";
+            
+            if (main_Courante != null && main_Courante.Count != 0)
+            {
+                for (int i = 0; i < main_Courante.Count; i++)
+                {
+                    txt += main_Courante[i].Lettre + " | ";
+                }
+            }
 
+            return txt;
+        }
 
         public void Add_Mot(string mot)
         {
@@ -86,15 +107,9 @@ namespace Scrabble
         
         public void Add_Main_Courante(Jeton monjeton)
         {
-            if(Main_Courante!=null && Main_Courante.Count != 0)
+            if(main_Courante!=null && main_Courante.Count != 0 && main_Courante.Count<7)
             {
-                for(int i=0; i < Main_Courante.Count; i++)
-                {
-                    if (Main_Courante[i] == null)
-                    {
-                        //Main_Courante[i] = Retire_Jeton();
-                    }
-                }
+                main_Courante.Add(monjeton);
             }
         }
         public void Remove_Main_Courante(Jeton monjeton)

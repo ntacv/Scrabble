@@ -10,16 +10,14 @@ namespace Scrabble
             Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("Scrabble!");
             Console.ResetColor();
+            //Console.WindowHeight = 480;
+            //Console.SetWindowSize(100,100);
 
 
             Jeu JeuTest = new Jeu();
             JeuTest.PlaceWord();
+            
             /*
-
-            bool init = AskSaves();
-            int indexLang = AskLanguage();
-
-
 
             Sac_Jetons Sac = new Sac_Jetons();
             Console.WriteLine(Sac.ToString());
@@ -31,16 +29,10 @@ namespace Scrabble
             } while (Sac.Total != 0);
             //Console.WriteLine(Sac.ToString() + "\n total : " + Sac.Total);
 
-            Dictionnaire Dicho = new Dictionnaire("Francais");
-            string mot = "ex";
-            int key = mot.Length;
-            int index = Dicho.MotsTrie.IndexOfKey(key);
-            //Console.WriteLine(dicho.RechDichoRecursif(mot, 0, Dicho.MotsTrie[key].Length-1));
-
             Plateau Plateau = new Plateau(' ');
             Plateau.ToStringColor();
             */
-            
+
         }
 
 
@@ -57,24 +49,36 @@ namespace Scrabble
             return txt;
         }
 
-        public static int AskLanguage()
+        public static string AskLanguage()
         {
             string[] menu = new string[] { "Francais", "English", "Español" };
 
             int index = Menu(menu);
             
-            return index;
+            return menu[index];
         }
 
-        public static bool AskSaves()
+        public static int AskSaves()
         {
-            bool init = false;
+            int init = 0;
 
             //ask init or save
             string[] menu = new string[2] { "Commencer", "Reprendre" };
 
             int index = Menu(menu);
-            if (index == 0) init = true;
+            if (index == 1) init = 1;
+
+            return init;
+        }
+        public static int AskJoueur()
+        {
+            int init = 0;
+
+            //ask init or save
+            string[] menu = new string[2] { "Ajouter un joueur", "Commencer la partie" };
+
+            int index = Menu(menu);
+            if (index == 1) init = 1;
 
             return init;
         }

@@ -20,13 +20,12 @@ namespace Scrabble
         A-Z* : Jetons
 
         */
-        public Plateau(char car)
+        public Plateau(string content)
         {
-            string path = "../../../Files/PlateauVide.txt";
-            if (File.Exists(path))
+            if (content != null && content.Length != 0)
             {
                 this.plateau = new char[15, 15];
-                string[] allLines = File.ReadAllLines(path);
+                string[] allLines = content.Split("\r\n");
 
                 for (int i = 0; i < allLines.Length; i++)
                 {
@@ -37,13 +36,12 @@ namespace Scrabble
                 }
             }
         }
-        public Plateau()
+        /*
+        public Plateau(string content)
         {
-            string path = "../../../Files/InstancePlateau.txt";
-            if (File.Exists(path))
-            {
+            if(content!=null && content.Length != 0) { 
                 this.plateau = new char[15, 15];
-                string[] allLines = File.ReadAllLines(path);
+                string[] allLines = content.Split("\r\n");
 
                 for (int i = 0; i<allLines.Length; i++)
                 {
@@ -56,7 +54,7 @@ namespace Scrabble
                 }
             }
         }
-
+        */
 
         public override string ToString()
         {
