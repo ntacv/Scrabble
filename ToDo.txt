@@ -16,13 +16,12 @@ prise en compte des score spétiaux (mot x2 /mot x3)
 A faire:
 
 boucle sans fin pour retirer tout les jetons
-revoir la méthode de recherche dichoRecusrive
  
 TEST UNITAIRE
 
 
 En plus
-Class de sauvegardes, affichage liste de sauvegarde pour choisir laquelle avec pourcentage, affichage tableau?
+Class de sauvegardes, affichage sauvegarde avec pourcentage, affichage tableau?
 
 
 Choix1:
