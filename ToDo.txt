@@ -7,7 +7,7 @@ Nathan and Clément
 Continuer sauvegarde ? (création d'une méthode qui rappelle tt les constructeurs + définnition du temps de partie)
 sac de jeton à 0
 reset du plateau 
-définir les joueurs (nom + nombres + main courente + temps par tour)
+définir les joueurs (nom + nombres + main courante + temps par tour)
 Lorsque l'on rentre un mot , verrification sui il n'y à pas de chiffres 
 calcul du score 
 prise en compte des score spétiaux (mot x2 /mot x3)
@@ -15,8 +15,13 @@ prise en compte des score spétiaux (mot x2 /mot x3)
 
 A faire:
 
-boucle sans fin pour retirer tout les jetons
- 
+//boucle sans fin pour retirer tout les jetons
+verif utilisation des bonnes lettres
+confirmation du mot à jouer (calcul du score...)
+placement des lettre (verification position valide)
+introduction du temps par tour
+rajouter un "delay" entre chaque tour
+
 TEST UNITAIRE
 
 

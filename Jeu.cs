@@ -18,6 +18,7 @@ namespace Scrabble
         Plateau _plateau;
         Sac_Jetons _sac_jetons;
         List<Joueur> _joueurs;
+        Cursor _curseur;
 
 
         public Jeu()
@@ -28,10 +29,11 @@ namespace Scrabble
 
             if (init == 0) Initialisation();
             else Sauvegarde();
-
+            //Cursor curseur = new Cursor(_plateau);
+            //curseur.AskMovm();
             InGame();
             //Console.WriteLine(_sac_jetons.ToString());
-
+            
 
         }
 
@@ -50,6 +52,7 @@ namespace Scrabble
             string content = ReadFile(path);
             string[] parts = content.Split("\r\n\r\n");
             _plateau = new Plateau(parts[0]);
+            _curseur = new Cursor(_plateau);
             _sac_jetons = new Sac_Jetons(parts[1]);
 
             //définition des joeurs
@@ -67,6 +70,7 @@ namespace Scrabble
                 add = Program.AskJoueur();
             } while (add == 0 && nb<4);
 
+            
 
 
             Console.WriteLine(JoueurToString());
@@ -80,6 +84,7 @@ namespace Scrabble
             string content = ReadFile(path);
             string[] parts = content.Split("\r\n\r\n");
             _plateau = new Plateau(parts[1]);
+            _curseur = new Cursor(_plateau);
             _sac_jetons = new Sac_Jetons(parts[2]);
 
             //définition du dictionnaire
@@ -132,7 +137,7 @@ namespace Scrabble
             {
                 
                 Console.Clear();
-                _plateau.ToStringColor();
+                _plateau.ToStringColor(_curseur.Position);
                 Console.WriteLine("C'est au tour de " + _joueurs[index].ToStringGame());
                 PlaceWord();
                 SaveGame();
@@ -151,7 +156,11 @@ namespace Scrabble
         
         public void PlaceWord()
         {
-            //bool possible = false;
+
+            //déplacement curseur
+            _curseur.AskMovm();
+
+
 
             //1er mot sur la case central
 
@@ -166,15 +175,12 @@ namespace Scrabble
             //return possible;
         }
         
-        public void Cursor()
+    
+        
+        public void ElapsedTime()
         {
-            //clignote
 
-            //deplace
-
-            
         }
-
         public string JoueurToString()
         {
             string txt = "Joueurs : \n";

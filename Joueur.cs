@@ -107,7 +107,7 @@ namespace Scrabble
         
         public void Add_Main_Courante(Jeton monjeton)
         {
-            if(main_Courante!=null && main_Courante.Count != 0 && main_Courante.Count<7)
+            if(main_Courante.Count<7)
             {
                 main_Courante.Add(monjeton);
             }

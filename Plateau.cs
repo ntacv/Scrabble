@@ -9,6 +9,11 @@ namespace Scrabble
     {
         char[,] plateau;
 
+        public char[,] Board
+        {
+            get { return plateau; }
+        }
+
         /* code score spéciaux
 
         0 : case milieu/début
@@ -76,7 +81,7 @@ namespace Scrabble
             return txt;
             
         }
-        public void ToStringColor()
+        public void ToStringColor(int[] Position)
         {
             Console.Write("Plateau : \n");
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -86,33 +91,50 @@ namespace Scrabble
                 {
                     for (int j = 0; j < plateau.GetLength(1); j++)
                     {
-
+                       
+                        Console.ForegroundColor = ConsoleColor.Gray;
                         switch (plateau[i, j])
                         {
                             case '0':
                                 Console.BackgroundColor = ConsoleColor.DarkMagenta;
-
+                                if (Position[0] == i && Position[1] == j){Console.BackgroundColor = ConsoleColor.White;}
+                                Console.Write("  ");
                                 break;
                             case '1':
                                 Console.BackgroundColor = ConsoleColor.Green;
+                                if (Position[0] == i && Position[1] == j) { Console.BackgroundColor = ConsoleColor.White; }
+                                Console.Write("  ");
                                 break;
                             case '2':
                                 Console.BackgroundColor = ConsoleColor.Magenta;
+                                if (Position[0] == i && Position[1] == j) { Console.BackgroundColor = ConsoleColor.White; }
+                                Console.Write("DW");
                                 break;
                             case '3':
                                 Console.BackgroundColor = ConsoleColor.DarkRed;
+                                if (Position[0] == i && Position[1] == j) { Console.BackgroundColor = ConsoleColor.White; }
+                                Console.Write("TW");
                                 break;
                             case '4':
                                 Console.BackgroundColor = ConsoleColor.Cyan;
+                                if (Position[0] == i && Position[1] == j) { Console.BackgroundColor = ConsoleColor.White; }
+                                Console.Write("DL");
                                 break;
                             case '5':
                                 Console.BackgroundColor = ConsoleColor.DarkCyan;
+                                if (Position[0] == i && Position[1] == j) { Console.BackgroundColor = ConsoleColor.White; }
+                                Console.Write("TL");
                                 break;
                             default:
                                 Console.BackgroundColor = ConsoleColor.Yellow;
+                                Console.ForegroundColor = ConsoleColor.Black;
+                                if (Position[0] == i && Position[1] == j) { Console.BackgroundColor = ConsoleColor.White; }
+                                Console.Write(plateau[i, j]+" ");
                                 break;
                         }
-                        Console.Write("  ");
+
+                        
+
                     }
                     Console.ResetColor();
                     Console.Write("\n");

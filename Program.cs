@@ -13,7 +13,8 @@ namespace Scrabble
             //Console.WindowHeight = 480;
             Console.SetWindowSize(60,30);
 
-
+            
+            
             Jeu JeuTest = new Jeu();
             JeuTest.PlaceWord();
             

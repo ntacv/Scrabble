@@ -51,7 +51,7 @@ namespace Scrabble
         public Jeton Retire_Jeton(Random r)
         {
             Jeton jeton=null;
-            if (total != 1)
+            if (total != 0)
             {
                 int rdm = r.Next(total + 1);
                 int nbr = 0;
