@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 
 
 namespace Scrabble
@@ -147,6 +148,10 @@ namespace Scrabble
                 {
                     index = 0;
                 }
+
+                int sleepTime = 1000; // in mills
+                Thread.Sleep(sleepTime);
+
             } while (EndGame());
         }
         public bool EndGame()
@@ -158,21 +163,30 @@ namespace Scrabble
         {
 
             //déplacement curseur
-            _curseur.AskMovm();
-
+            //_curseur.AskMovm();
 
 
             //1er mot sur la case central
+            int index = 0;
+            do {
+                //if(index>0) Program.ClearConsoleLine2();
+                string mot = null;
+                do
+                {
+                    mot = Program.VerifieString("Taper un mot : ");
 
-            string mot = null;
-            do
-            {
-                mot = Program.VerifieString("Taper un mot : ");
-            } while (mot.Length<2 || mot.Length>15 || !_dicho[0].RechDichoRecursif(mot, 0, _dicho[0].MotsTrie[mot.Length].Length));
-            Console.WriteLine("votre mot \"" + mot + "\" est correct");
+                } while (mot.Length < 2 || mot.Length > 15 || !_dicho[0].RechDichoRecursif(mot, 0, _dicho[0].MotsTrie[mot.Length].Length));
+
+                Console.WriteLine("votre mot \"" + mot + "\" est correct");
+                index++;
+            }
+            while(Program.AskConfirm() != 0);
+
             //place mot : mot//coordonnees//Hori/Vertical
 
             //return possible;
+
+
         }
         
     

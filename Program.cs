@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 
 namespace Scrabble
 {
@@ -7,14 +8,14 @@ namespace Scrabble
     {
         static void Main(string[] args)
         {
+            Console.SetWindowSize(60, 30);
             Console.BackgroundColor = ConsoleColor.Red;
-            Console.WriteLine("Scrabble!");
+            Console.WriteLine("Scrabble!\n\n");
+            Thread.Sleep(1000);
             Console.ResetColor();
-            //Console.WindowHeight = 480;
-            Console.SetWindowSize(60,30);
 
-            
-            
+
+
             Jeu JeuTest = new Jeu();
             JeuTest.PlaceWord();
             
@@ -58,7 +59,6 @@ namespace Scrabble
             
             return menu[index];
         }
-
         public static int AskSaves()
         {
             int init = 0;
@@ -83,7 +83,18 @@ namespace Scrabble
 
             return init;
         }
+        public static int AskConfirm()
+        {
+            int init = 0;
 
+            //ask init or save
+            string[] menu = new string[2] { "Confirme", "Changer" };
+
+            int index = Menu(menu);
+            if (index == 1) init = 1;
+
+            return init;
+        }
 
         public static int Menu(string[] menu)
         {
@@ -91,8 +102,12 @@ namespace Scrabble
             int index = 0;
             do
             {
-                Console.Clear();
-
+                //Console.Clear();
+                int currentLineCursor = Console.CursorTop;
+                Console.SetCursorPosition(0, Console.CursorTop - menu.Length+1);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, currentLineCursor - menu.Length+1);
+                
                 for (int i = 0; i < menu.Length; i++)
                 {
                     if (i == index)
@@ -100,7 +115,8 @@ namespace Scrabble
                         Console.BackgroundColor = ConsoleColor.White;
                         Console.ForegroundColor = ConsoleColor.Black;
                     }
-                    Console.WriteLine(menu[i]);
+                    if (i == menu.Length - 1) Console.Write(menu[i]);
+                    else Console.WriteLine(menu[i]);
                     Console.ResetColor();
                 }
                 inputKey = Console.ReadKey().Key;
@@ -116,6 +132,20 @@ namespace Scrabble
             } while (inputKey != ConsoleKey.Enter);
             return index;
         }
-        
+
+        public static void ClearConsoleLine()
+        {
+            int currentLineCursor = Console.CursorTop;
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLineCursor);
+        }
+        public static void ClearConsoleLine2()
+        {
+            int currentLineCursor = Console.CursorTop;
+            Console.SetCursorPosition(0, Console.CursorTop-1);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLineCursor-1);
+        }
     }
 }
