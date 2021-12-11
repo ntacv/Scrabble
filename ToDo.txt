@@ -20,7 +20,7 @@ verif utilisation des bonnes lettres
 confirmation du mot à jouer (calcul du score...)
 placement des lettre (verification position valide)
 introduction du temps par tour
-rajouter un "delay" entre chaque tour
+//rajouter un "delay" entre chaque tour
 
 TEST UNITAIRE
 

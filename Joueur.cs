@@ -13,7 +13,10 @@ namespace Scrabble
         List<string> mots;
         List<Jeton> main_Courante;
 
-        
+        public List<Jeton> Main_Courante
+        {
+            get { return main_Courante; }
+        }
 
         //Constructeur
         public Joueur()

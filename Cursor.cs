@@ -9,7 +9,6 @@ namespace Scrabble
 
         Plateau lab;
         int[] position;
-
         public int[] Position
         {
             get { return position; }
@@ -19,6 +18,7 @@ namespace Scrabble
         {
             this.lab = lab;
             this.position = new int[] {7,7};
+            
             /*
             if (ligne >= 0) this.ligne = ligne;
             else this.ligne = 0;
@@ -114,29 +114,41 @@ namespace Scrabble
             lab.MarquerPassage(position);
 
         }*/
-        public static char[] directionPossible(Plateau lab, int[] position)
-        {
-            char[] key = new char[] { ' ', ' ', ' ', ' ' };
-            int x = position[0];
-            int y = position[1];
 
-            if (lab.Board[x, y - 1] == 0 || lab.Board[x, y - 1] == 3)
-            {//Si la case du haut n'est pas un mur
-                key[0] = 'q';
-            }
-            if (lab.Board[x - 1, y] == 0 || lab.Board[x - 1, y] == 3)
+        public void PlaceLettre(List<Jeton> main_courante, Plateau lab)
+        {
+            if (position != null && position[0] < lab.Board.GetLength(0) && position[1] < lab.Board.GetLength(1))
             {
-                key[1] = 'z';
+                ConsoleKey inputKey;
+                do { 
+                    inputKey = Console.ReadKey().Key;
+                    Console.WriteLine(inputKey);
+                    //if (inputKey >=65 && inputKey <=90 )//65 90 A to Z
+                    {
+                        
+                    }
+                } while (inputKey != ConsoleKey.Enter);
+
             }
-            if (lab.Board[x, y + 1] == 0 || lab.Board[x, y + 1] == 3)
+        }
+        public bool DirectionPossible(Plateau lab)
+        {
+            bool possible = false;
+
+            if(position!=null && position[0]<lab.Board.GetLength(0) && position[1] < lab.Board.GetLength(1))
             {
-                key[2] = 'd';
+                for(int i = 0; i < lab.Board.GetLength(0); i++)
+                {
+                    for (int j = 0; j < lab.Board.GetLength(1); j++)
+                    {
+                        if(lab.Board[position[0],position[1]] == 0)
+                        {
+
+                        }
+                    }
+                }
             }
-            if (lab.Board[x + 1, y] == 0 || lab.Board[x + 1, y] == 3)
-            {
-                key[3] = 's';
-            }
-            return key;
+            return possible;
         }
         public int AskMovm()
         {

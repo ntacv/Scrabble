@@ -136,11 +136,11 @@ namespace Scrabble
             int index = 0;
             do
             {
-                
+                Joueur player = _joueurs[index];
                 Console.Clear();
                 _plateau.ToStringColor(_curseur.Position);
-                Console.WriteLine("C'est au tour de " + _joueurs[index].ToStringGame());
-                PlaceWord();
+                Console.WriteLine("C'est au tour de " + player.ToStringGame());
+                PlaceWord(player);
                 SaveGame();
                 
                 index++;
@@ -159,12 +159,12 @@ namespace Scrabble
             return true;
         }
         
-        public void PlaceWord()
+        public void PlaceWord(Joueur player)
         {
 
             //déplacement curseur
             //_curseur.AskMovm();
-
+            _curseur.PlaceLettre(player.Main_Courante, _plateau);
 
             //1er mot sur la case central
             int index = 0;

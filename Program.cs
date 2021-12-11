@@ -17,7 +17,7 @@ namespace Scrabble
 
 
             Jeu JeuTest = new Jeu();
-            JeuTest.PlaceWord();
+            //JeuTest.PlaceWord();
             
             /*
 
