@@ -27,7 +27,7 @@ TEST UNITAIRE
 
 En plus
 Class de sauvegardes, affichage sauvegarde avec pourcentage, affichage tableau?
-
+Reglage avec modif du temps et couleurs et methodes de placeword
 
 Choix1:
 Case coloré, deplacmeent ak fleches
