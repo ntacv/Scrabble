@@ -7,6 +7,7 @@ Nathan and Clément
 
 modifier le plateau (placer un mot)
 check des lettres dans la main
+Temps par tours
 
 
 TEST UNITAIRE
