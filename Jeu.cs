@@ -167,10 +167,11 @@ namespace Scrabble
             _curseur.PlaceLettre(player.Main_Courante, _plateau);
 
             //1er mot sur la case central
+
+            string mot = null;
             int index = 0;
             do {
                 //if(index>0) Program.ClearConsoleLine2();
-                string mot = null;
                 do
                 {
                     mot = Program.VerifieString("Taper un mot : ");
@@ -182,11 +183,13 @@ namespace Scrabble
             }
             while(Program.AskConfirm() != 0);
 
+
             //place mot : mot//coordonnees//Hori/Vertical
 
+
+            player.Add_Score(CalculScore(mot));
+
             //return possible;
-
-
         }
         
     
@@ -252,6 +255,24 @@ namespace Scrabble
                 if (SWrite != null) SWrite.Close();
             }
 
+        }
+
+        public int CalculScore(string mot)
+        {
+            int score = 0;
+
+            if(mot!=null && mot.Length != 0)
+            {
+
+                for(int i=0; i < mot.Length; i++)
+                {
+                    Jeton lettre = _sac_jetons.InfoJeton(mot[i]);
+                    score += lettre.Score;
+                }
+
+            }
+
+            return score;
         }
     }
 }
