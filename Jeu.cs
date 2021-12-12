@@ -179,7 +179,8 @@ namespace Scrabble
 
             
 
-            do {
+            do 
+            {
                 do
                 {
                     do
