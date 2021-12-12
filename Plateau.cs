@@ -144,5 +144,35 @@ namespace Scrabble
             Console.ResetColor();
         }
 
+        public void AddWord(string mot, int[] position, int orientation)
+        {
+
+            if (orientation == 0)//horizontale
+            {
+                if (position[1] + mot.Length < 15)
+                {
+                    for (int i = 0; i < mot.Length; i++)
+                    {
+                        char lettrePlateau = plateau[position[0], position[1] + i];
+
+                        lettrePlateau = mot[i];
+                    }
+                }
+            }
+            else //verticale
+            {
+                if (position[0] + mot.Length < 15)
+                {
+                    for (int i = 0; i < mot.Length; i++)
+                    {
+                        char lettrePlateau = plateau[position[0] + i, position[1]];
+                        lettrePlateau = mot[i];
+                    }
+                }
+            }
+        }
+
+
+
     }
 }

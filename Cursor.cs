@@ -201,5 +201,63 @@ namespace Scrabble
             } while (inputKey != ConsoleKey.Enter);
             return index;
         }
+
+
+        public bool ConfirmPlaceWord(Plateau plateau, string mot, int orientation)
+        {
+            bool possible=false;
+            
+            if(mot!=null && mot.Length!=0)
+            {
+                if(orientation == 0)//horizontale
+                {
+                    if (position[1] + mot.Length < 15)
+                    {
+                        for (int i = 0; i < mot.Length; i++)
+                        {
+                            char lettrePlateau = plateau.Board[position[0], position[1] + i];
+                            if (Char.IsLetter(lettrePlateau))
+                            {//A to Z
+                                if(lettrePlateau == mot[i])
+                                {
+                                    possible = true;
+                                }
+                                else
+                                {
+                                    possible = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                else //verticale
+                {
+                    if (position[0] + mot.Length < 15)
+                    {
+                        for (int i = 0; i < mot.Length; i++)
+                        {
+                            char lettrePlateau = plateau.Board[position[0] + i, position[1]];
+                            if (Char.IsLetter(lettrePlateau))
+                            {//A to Z
+                                if(lettrePlateau == mot[i])
+                                {
+                                    possible = true;
+                                }
+                                else
+                                {
+                                    possible = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
+            return possible;
+        } 
+
+
     }
 }

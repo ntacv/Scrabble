@@ -20,6 +20,7 @@ namespace Scrabble
         Sac_Jetons _sac_jetons;
         List<Joueur> _joueurs;
         Cursor _curseur;
+        int _indexTour;
 
 
         public Jeu()
@@ -27,6 +28,7 @@ namespace Scrabble
 
 
             int init = Program.AskSaves();
+            _indexTour=0;
 
             if (init == 0) Initialisation();
             else Sauvegarde();
@@ -144,6 +146,7 @@ namespace Scrabble
                 SaveGame();
                 
                 index++;
+                _indexTour++;
                 if (index == _joueurs.Count)
                 {
                     index = 0;
@@ -159,33 +162,46 @@ namespace Scrabble
             return true;
         }
         
-        public void PlaceWord(Joueur player)
+
+        public void PlaceWord(Joueur player)//joueur en cours 
         {
 
             //déplacement curseur
             //_curseur.AskMovm();
-            _curseur.PlaceLettre(player.Main_Courante, _plateau);
+            //_curseur.PlaceLettre(player.Main_Courante, _plateau);
 
             //1er mot sur la case central
 
             string mot = null;
             int index = 0;
+            int position = 0;
+            int orientation = 0;
+
+            
+
             do {
-                //if(index>0) Program.ClearConsoleLine2();
                 do
                 {
-                    mot = Program.VerifieString("Taper un mot : ");
+                    do
+                    {
+                        mot = Program.VerifieString("Taper un mot : ");
 
-                } while (mot.Length < 2 || mot.Length > 15 || !_dicho[0].RechDichoRecursif(mot, 0, _dicho[0].MotsTrie[mot.Length].Length));
+                    } while (mot.Length < 2 || mot.Length > 15 || !_dicho[0].RechDichoRecursif(mot, 0, _dicho[0].MotsTrie[mot.Length].Length));
 
-                Console.WriteLine("votre mot \"" + mot + "\" est correct");
-                index++;
+                    Console.WriteLine("votre mot \"" + mot + "\" est correct");
+                    index++;
+
+                    position = _curseur.AskMovm();
+
+                    orientation = Program.AskDirection();
+
+                } while (_curseur.ConfirmPlaceWord(_plateau, mot, orientation));
             }
             while(Program.AskConfirm() != 0);
 
 
             //place mot : mot//coordonnees//Hori/Vertical
-
+            _plateau.AddWord(mot,_curseur.Position,orientation);
 
             player.Add_Score(CalculScore(mot));
 
@@ -193,10 +209,12 @@ namespace Scrabble
         }
         
     
-        
+        /// <summary>
+        /// Calcul du temps par tour
+        /// </summary>
         public void ElapsedTime()
         {
-
+            
         }
         public string JoueurToString()
         {
@@ -260,18 +278,14 @@ namespace Scrabble
         public int CalculScore(string mot)
         {
             int score = 0;
-
             if(mot!=null && mot.Length != 0)
             {
-
                 for(int i=0; i < mot.Length; i++)
                 {
                     Jeton lettre = _sac_jetons.InfoJeton(mot[i]);
                     score += lettre.Score;
                 }
-
             }
-
             return score;
         }
     }

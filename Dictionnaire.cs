@@ -53,57 +53,59 @@ namespace Scrabble
         public bool RechDichoRecursif(string mot, int debut, int fin)
         {
             bool exist = false;
-            mot = mot.ToUpper();
-            int key = mot.Length;
-            int index = motsTrie.IndexOfKey(key);
-
-            int milieu = (debut + fin) / 2;
-            //Console.Write(motsTrie[key][milieu] + " ; "+milieu+"   ");
-
-            if(fin < debut)
+            if (mot != null && mot.Length != 0)
             {
-                return exist;
-            }
-            if(motsTrie[key][milieu] == mot)
-            {
-                return true;
-            }
-            else
-            {
+                mot = mot.ToUpper();
+                int key = mot.Length;
+                int index = motsTrie.IndexOfKey(key);
 
-                if (mot.CompareTo(motsTrie[key][milieu]) == -1)
+                int milieu = (debut + fin) / 2;
+                //Console.Write(motsTrie[key][milieu] + " ; "+milieu+"   ");
+
+                if (fin < debut)
                 {
-                    return RechDichoRecursif(mot, debut, milieu - 1);
+                    return exist;
+                }
+                if (motsTrie[key][milieu] == mot)
+                {
+                    return true;
                 }
                 else
                 {
-                    return RechDichoRecursif(mot, milieu + 1, fin);
-                }
 
-                /*
-                bool motSupMid = true;
-                bool motInfMid = true;
-                
-                for (int i = 0; i < key; i++)
-                { 
-                    if(mot[i] > motsTrie[key][milieu][i])
+                    if (mot.CompareTo(motsTrie[key][milieu]) == -1)
                     {
-                        motSupMid = false;
+                        return RechDichoRecursif(mot, debut, milieu - 1);
                     }
-                    if(mot[i] < motsTrie[key][milieu][i])
+                    else
                     {
-                        motInfMid = false;
+                        return RechDichoRecursif(mot, milieu + 1, fin);
                     }
+
+                    /*
+                    bool motSupMid = true;
+                    bool motInfMid = true;
+
+                    for (int i = 0; i < key; i++)
+                    { 
+                        if(mot[i] > motsTrie[key][milieu][i])
+                        {
+                            motSupMid = false;
+                        }
+                        if(mot[i] < motsTrie[key][milieu][i])
+                        {
+                            motInfMid = false;
+                        }
+                    }
+                    if (!motSupMid && motInfMid)
+                    {
+                        //mot inférieur au mot milieu
+                        return RechDichoRecursif(mot, debut, milieu - 1);
+                    }
+                    else return RechDichoRecursif(mot, milieu + 1, fin);
+                    */
                 }
-                if (!motSupMid && motInfMid)
-                {
-                    //mot inférieur au mot milieu
-                    return RechDichoRecursif(mot, debut, milieu - 1);
-                }
-                else return RechDichoRecursif(mot, milieu + 1, fin);
-                */
             }
-
             return exist;
         }
 

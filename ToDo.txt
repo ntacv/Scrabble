@@ -2,6 +2,19 @@ Scrabble game project
 
 Nathan and Clément
 
+
+### Etape last week ###
+
+modifier le plateau (placer un mot)
+check des lettres dans la main
+
+
+TEST UNITAIRE
+COMMENTAIRES
+RELECTURE (enlever le superflux)
+
+
+
 étapes :
 
 Continuer sauvegarde ? (création d'une méthode qui rappelle tt les constructeurs + définnition du temps de partie)
@@ -17,12 +30,27 @@ A faire:
 
 //boucle sans fin pour retirer tout les jetons
 verif utilisation des bonnes lettres
-confirmation du mot à jouer (calcul du score...)
+//confirmation du mot à jouer (calcul du score...)
 placement des lettre (verification position valide)
 introduction du temps par tour
 //rajouter un "delay" entre chaque tour
 
-TEST UNITAIRE
+Pour placer un mot :
+    -crée le mot 
+    -confirme mot dans dicho
+    rechDicho
+    -le placer sur le plateau (Demande position avec le curseur) 
+    cursorPosition
+    -confirme la position + choix de l'orientation 
+    ConfirmePlaceWord
+    -confirme score 
+    ConfirmeScore
+  RemoveMainCourante
+  AddScore
+  AddMot
+  AddMainCourante
+
+
 
 
 En plus
