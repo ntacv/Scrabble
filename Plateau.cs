@@ -153,9 +153,7 @@ namespace Scrabble
                 {
                     for (int i = 0; i < mot.Length; i++)
                     {
-                        char lettrePlateau = plateau[position[0], position[1] + i];
-
-                        lettrePlateau = mot[i];
+                        plateau[position[0], position[1] + i] = mot[i];
                     }
                 }
             }
@@ -165,8 +163,7 @@ namespace Scrabble
                 {
                     for (int i = 0; i < mot.Length; i++)
                     {
-                        char lettrePlateau = plateau[position[0] + i, position[1]];
-                        lettrePlateau = mot[i];
+                        plateau[position[0] + i, position[1]] = mot[i];
                     }
                 }
             }

@@ -183,20 +183,43 @@ namespace Scrabble
             {
                 do
                 {
+                    //plateau ne s'affiche pas après la premiere
                     do
                     {
                         mot = Program.VerifieString("Taper un mot : ");
 
                     } while (mot.Length < 2 || mot.Length > 15 || !_dicho[0].RechDichoRecursif(mot, 0, _dicho[0].MotsTrie[mot.Length].Length));
-
+                    mot = mot.ToUpper();
                     Console.WriteLine("votre mot \"" + mot + "\" est correct");
                     index++;
 
-                    position = _curseur.AskMovm();
+                    _curseur.AskMovm();
+                    /*
+                    #region Demande position
+                    int ligne;
+                    do
+                    {
+                        Console.WriteLine("Choisissez ligne");
+                        ligne = Convert.ToInt32(Console.ReadLine());
+                    } while (ligne < 0 || ligne > 14);
+                    int colonne;
+                    do
+                    {
+                        Console.WriteLine("Choisissez colonne");
+                        colonne = Convert.ToInt32(Console.ReadLine());
+                    } while (colonne < 0 || colonne > 14);
+
+                    int[] pos = new int[] { ligne,colonne};
+                    _curseur.Position = pos;
+                    #endregion*/
+                    //Console.WriteLine("position " + pos[0] + " , " + pos[1]);
+                    Console.WriteLine("curseur  " + _curseur.Position[0] + " , " + _curseur.Position[1]);
+                    Thread.Sleep(4000);
+
 
                     orientation = Program.AskDirection();
 
-                } while (_curseur.ConfirmPlaceWord(_plateau, mot, orientation));
+                } while (!_curseur.ConfirmPlaceWord(_plateau, mot, orientation));
             }
             while(Program.AskConfirm() != 0);
 

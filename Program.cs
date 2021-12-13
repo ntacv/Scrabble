@@ -13,7 +13,6 @@ namespace Scrabble
             Console.WriteLine("Scrabble!\n\n");
             Thread.Sleep(1000);
             Console.ResetColor();
-            
 
 
 

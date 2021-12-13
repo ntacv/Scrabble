@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Scrabble
 {
@@ -12,6 +13,7 @@ namespace Scrabble
         public int[] Position
         {
             get { return position; }
+            set { position = value; }
         }
 
         public Cursor(Plateau lab)
@@ -150,6 +152,7 @@ namespace Scrabble
             }
             return possible;
         }
+        //ne marche pas? return position choisi?
         public int AskMovm()
         {
             int init = 0;
@@ -157,12 +160,14 @@ namespace Scrabble
             //Plateau plateau = new Plateau;
             int[] index = Movement(lab);
             Console.WriteLine(index[0]+" , "+index[1]);
+            position[0] = index[0];
+            position[1] = index[1];
             return init;
         }
         public static int[] Movement(Plateau plateau)
         {
             ConsoleKey inputKey;
-            int[] index = new int[] { 0, 0 };
+            int[] index = new int[] { 7, 7 };
             do
             {
                 Console.Clear();
@@ -204,7 +209,7 @@ namespace Scrabble
 
 
         public bool ConfirmPlaceWord(Plateau plateau, string mot, int orientation)
-        {
+        {//ne verifie pas les lettres autours de notre mot en cours
             bool possible=false;
             
             if(mot!=null && mot.Length!=0)
@@ -216,9 +221,9 @@ namespace Scrabble
                         for (int i = 0; i < mot.Length; i++)
                         {
                             char lettrePlateau = plateau.Board[position[0], position[1] + i];
-                            if (Char.IsLetter(lettrePlateau))
-                            {//A to Z
-                                if(lettrePlateau == mot[i])
+                            if (Char.IsLetter(lettrePlateau))//A to Z
+                            {
+                                if(mot[i] == plateau.Board[position[0], position[1] + i])
                                 {
                                     possible = true;
                                 }
