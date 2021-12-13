@@ -50,6 +50,22 @@ namespace Scrabble
             
             return txt;
         }
+        public static string VerifieStringWord(string phrase)
+        {
+            string txt = null;
+            //index pour passer le tour apres 5 tentative
+            int index_tentative = 0;
+            do
+            {
+                Console.Write(phrase);
+                txt = Convert.ToString(Console.ReadLine());
+                index_tentative++;
+                Console.WriteLine(index_tentative);
+            } while (txt == null || txt.Length == 0);
+            //index_tentative < 5// && txt == null || txt.Length == 0);
+
+            return txt;
+        }
         public static bool VerifieChar(char lettre)
         {
             bool possible = false;

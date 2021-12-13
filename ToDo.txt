@@ -12,6 +12,12 @@ check au moins une lettre
 Temps par tours
 
 
+verif mot sur la mm ligne
+verif main courante
+verif mot autour
+
+esc pour passer le tour
+
 TEST UNITAIRE
 COMMENTAIRES
 RELECTURE (enlever le superflux)

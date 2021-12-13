@@ -12,10 +12,16 @@ namespace Scrabble
         int score;
         List<string> mots;
         List<Jeton> main_Courante;
+        List<Jeton> main_Courante_En_Cours;
 
         public List<Jeton> Main_Courante
         {
             get { return main_Courante; }
+        }
+        public List<Jeton> Main_Courante_En_Cour
+        {
+            get { return main_Courante_En_Cours; }
+            set { main_Courante_En_Cours = value; }
         }
 
         //Constructeur
@@ -26,6 +32,7 @@ namespace Scrabble
             score = 0;
             mots = null;
             main_Courante = new List<Jeton> { };
+            main_Courante_En_Cours = new List<Jeton> { };
         }
         public Joueur(string nom, int score, List<string> mots, List<Jeton> Main)
         {
@@ -33,6 +40,7 @@ namespace Scrabble
             this.score = score;
             this.mots = mots;
             this.main_Courante = Main;
+            this.main_Courante_En_Cours = new List<Jeton> { };
         }
         /// <summary>
         /// définie les joueurs a partir d'un tableau de joueurs;
@@ -117,8 +125,10 @@ namespace Scrabble
         }
         public void Remove_Main_Courante(Jeton monjeton)
         {
-
+            main_Courante.Remove(monjeton);
         }
+        //public bool In_Main_Courante(Plateau plateau, string mot)
+        
         
     }
 }
