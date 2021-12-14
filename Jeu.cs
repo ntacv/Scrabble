@@ -22,6 +22,7 @@ namespace Scrabble
         Cursor _curseur;
         int _indexTour;
         int indexDicho = 0;
+        int indexJoueur = 0;
 
 
         public Jeu()
@@ -35,7 +36,7 @@ namespace Scrabble
             else Sauvegarde();
             //Cursor curseur = new Cursor(_plateau);
             //curseur.AskMovm();
-            InGame();
+            StartGame();
             //Console.WriteLine(_sac_jetons.ToString());
             
 
@@ -74,8 +75,8 @@ namespace Scrabble
                 add = Program.AskJoueur();
             } while (add == 0 && nb<4);
 
-            
 
+            _indexTour = 0;
 
             Console.WriteLine(JoueurToString());
 
@@ -131,15 +132,14 @@ namespace Scrabble
 
         public void StartGame()
         {
-
             InGame();
         }
         public void InGame()
         {
-            int index = 0;
+            
             do
             {
-                Joueur player = _joueurs[index];
+                Joueur player = _joueurs[indexJoueur];
                 Console.Clear();
                 _plateau.ToStringColor(_curseur.Position);
 
@@ -151,14 +151,14 @@ namespace Scrabble
                 }
 
                 Console.WriteLine("C'est au tour de " + player.ToStringGame());
-                PlaceWord(player);
+                PlaceWord(player, _indexTour);
                 SaveGame();
                 
-                index++;
+                indexJoueur++;
                 _indexTour++;
-                if (index == _joueurs.Count)
+                if (indexJoueur == _joueurs.Count)
                 {
-                    index = 0;
+                    indexJoueur = 0;
                 }
 
                 int sleepTime = 1000; // in mills
@@ -172,7 +172,7 @@ namespace Scrabble
         }
         
 
-        public void PlaceWord(Joueur player)//joueur en cours 
+        public void PlaceWord(Joueur player, int indexTour)//joueur en cours 
         {
 
             //déplacement curseur
@@ -194,37 +194,41 @@ namespace Scrabble
                 {
                     //plateau ne s'affiche pas après la premiere
 
-                    mot = Program.VerifieStringWord("Taper un mot à placer : ", _dicho[indexDicho]);
-                    /*do{
-                        mot = Program.VerifieStringWord("Taper un mot : ");
-                    } while (mot.Length < 2 || mot.Length > 15 || !_dicho[0].RechDichoRecursif(mot, 0, _dicho[0].MotsTrie[mot.Length].Length));*/
+                    //mot = Program.VerifieStringWord("Taper un mot à placer : ", _dicho[indexDicho]);
+                    do{
+                        mot = Program.VerifieStringWord("Taper un mot : ",_dicho[indexDicho]);
+                    } 
+                    while (mot.Length < 2 || mot.Length > 15 || !_dicho[0].RechDichoRecursif(mot, 0, _dicho[indexDicho].MotsTrie[mot.Length].Length));
 
                     mot = mot.ToUpper();
                     Console.WriteLine("votre mot \"" + mot + "\" est correct");
                     index++;
 
-                    _curseur.AskMovm();
-                    
-                    #region Demande position
-                    /*
-                    int ligne;
-                    do
+                    if (indexTour > 0)
                     {
-                        Console.WriteLine("Choisissez ligne");
-                        ligne = Convert.ToInt32(Console.ReadLine());
-                    } while (ligne < 0 || ligne > 14);
-                    int colonne;
-                    do
-                    {
-                        Console.WriteLine("Choisissez colonne");
-                        colonne = Convert.ToInt32(Console.ReadLine());
-                    } while (colonne < 0 || colonne > 14);
+                        _curseur.AskMovm();
 
-                    int[] pos = new int[] { ligne,colonne};
-                    _curseur.Position = pos;
-                    */
-                    #endregion
-                    
+                        #region Demande position
+                        /*
+                        int ligne;
+                        do
+                        {
+                            Console.WriteLine("Choisissez ligne");
+                            ligne = Convert.ToInt32(Console.ReadLine());
+                        } while (ligne < 0 || ligne > 14);
+                        int colonne;
+                        do
+                        {
+                            Console.WriteLine("Choisissez colonne");
+                            colonne = Convert.ToInt32(Console.ReadLine());
+                        } while (colonne < 0 || colonne > 14);
+
+                        int[] pos = new int[] { ligne,colonne};
+                        _curseur.Position = pos;
+                        */
+                        #endregion
+                    }
+                    else { _curseur.Position = new int[] { 7, 7 }; }
 
                     orientation = Program.AskDirection();
 
@@ -240,55 +244,116 @@ namespace Scrabble
 
             //return possible;
         }
+        /*
+        public void PlaceWordFirst(Joueur player)//joueur en cours 
+        {
 
+            string mot = null;
+            int index = 0;
+            int position = 0;
+            int orientation = 0;
+
+
+
+            do
+            {
+                do
+                {
+                    //plateau ne s'affiche pas après la premiere
+
+                    mot = Program.VerifieStringWord("Taper un mot à placer : ", _dicho[indexDicho]);
+                    
+                    mot = mot.ToUpper();
+                    Console.WriteLine("votre mot \"" + mot + "\" est correct");
+                    index++;
+
+                    orientation = Program.AskDirection();
+
+                } while (!ConfirmPlaceWord(mot, orientation, new int[] { 7, 7 }, player));
+            }
+            while (Program.AskConfirm() != 0);
+
+
+            //place mot : mot//coordonnees//Hori/Vertical
+            _plateau.AddWord(mot, _curseur.Position, orientation);
+
+            player.Add_Score(CalculScore(mot));
+
+        }
+        */
         public bool ConfirmPlaceWord(string mot, int orientation, int[] position, Joueur player)
         {//ne verifie pas les lettres autours de notre mot en cours
             bool possible = false;
+            int ligne = 0;
+            int colonne = 0;
 
             if (mot != null && mot.Length != 0)
             {
                 if (orientation == 0)//horizontale
                 {
-                    if (position[1] + mot.Length < 15)
+                    ligne = position[0];
+                    colonne = position[1];
+                }
+                else
+                {
+                    ligne = position[1];
+                    colonne = position[0];
+                }
+                if (colonne + mot.Length < 15)
+                {
+                    for (int i = 0; i < mot.Length; i++)
                     {
-                        for (int i = 0; i < mot.Length; i++)
+
+
+                        if (orientation == 0)//horizontale
                         {
-                            char lettrePlateau = _plateau.Board[position[0], position[1] + i];
-                            if (Char.IsLetter(lettrePlateau))//A to Z
+                            ligne = position[0];
+                            colonne = position[1] + i;
+                        }
+                        else //Verticale
+                        {
+                            ligne = position[1] + i;
+                            colonne = position[0];
+                        }
+
+
+                        char lettrePlateau = _plateau.Board[ligne, colonne];
+                        if (Char.IsLetter(lettrePlateau))//A to Z
+                        {
+                            if (mot[i] == _plateau.Board[ligne, colonne])
                             {
-                                if (mot[i] == _plateau.Board[position[0], position[1] + i])
-                                {
-                                    possible = true;
-                                }
-                                else
-                                {
-                                    possible = false;
-                                    break;
-                                }
+                                possible = true;
                             }
                             else
                             {
-                                if (!player.Main_Courante.Contains(_sac_jetons.InfoJeton(mot[i])))
-                                {
+                                possible = false;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (!player.Main_Courante.Contains(_sac_jetons.InfoJeton(mot[i])))
+                            {
                                     
-                                    Console.WriteLine("Lettre non dans la main");
-                                    Thread.Sleep(1000);
-                                    possible = false;
-                                    break;
-                                }
-                                else
-                                {
-                                    //remove main courante
-                                    
-                                    player.Remove_Main_Courante(_sac_jetons.InfoJeton(mot[i]));
-                                    //ou
-                                    //return une list de char de la main et remove en dehors
-                                    //player.Main_Courante_En_Cour.Add(_sac_jetons.InfoJeton(mot[i]));
-                                }
+                                Console.WriteLine("Lettre non dans la main");
+                                Thread.Sleep(1000);
+                                possible = false;
+                                break;
+                            }
+                            else
+                            {
+                                //remove main courante
+                                possible = true;
+                                player.Remove_Main_Courante(_sac_jetons.InfoJeton(mot[i]));
+                                //ou
+                                //return une list de char de la main et remove en dehors
+                                //player.Main_Courante_En_Cour.Add(_sac_jetons.InfoJeton(mot[i]));
                             }
                         }
                     }
                 }
+                
+            /*
                 else //verticale
                 {// A CHANGER d'apres horiz
                     if (position[0] + mot.Length < 15)
@@ -311,7 +376,7 @@ namespace Scrabble
                         }
                     }
                 }
-
+            */
             }
             return possible;
         }

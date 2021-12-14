@@ -16,7 +16,7 @@ verif mot sur la mm ligne
 verif main courante
 verif mot autour
 
-ou 5tentatives dans les while
+ou 5tentatives dans les while (comme nombre joueurs)
 esc pour passer le tour
 
 TEST UNITAIRE

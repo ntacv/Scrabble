@@ -52,6 +52,20 @@ namespace Scrabble
         }
         public static string VerifieStringWord(string phrase, Dictionnaire _dicho)
         {
+            string txt = null;
+            //index pour passer le tour apres 5 tentative
+            int index_tentative = 0;
+            do
+            {
+                Console.Write(phrase);
+                txt = Convert.ToString(Console.ReadLine());
+                index_tentative++;
+                Console.WriteLine(index_tentative);
+            } while (txt == null || txt.Length == 0);
+            //index_tentative < 5// && txt == null || txt.Length == 0);
+
+            return txt;
+            /*
             string mot = null;
             //index pour passer le tour apres 5 tentative
             int index_tentative = 0;
@@ -59,14 +73,20 @@ namespace Scrabble
             {
                 Console.Write(phrase);
                 mot = Convert.ToString(Console.ReadLine());
+                if(mot == "*")
+                {
+                    mot = "";
+                }
+                Console.WriteLine(mot);
                 index_tentative++;
-                Console.WriteLine(index_tentative);
-            } 
-            while ( index_tentative<4 || mot == null || mot.Length == 0 ||
-            _dicho.RechDichoRecursif(mot, 0, _dicho.MotsTrie[mot.Length].Length));
+                //Console.WriteLine(index_tentative);
+            }
+            while(mot == null || mot.Length == 0);
+            //while (mot == null || mot.Length < 2 || mot.Length > 15 ||_dicho.RechDichoRecursif(mot, 0, _dicho.MotsTrie[mot.Length].Length));
             //index_tentative < 5// && txt == null || txt.Length == 0);
 
             return mot;
+            */
         }
         public static bool VerifieChar(char lettre)
         {
