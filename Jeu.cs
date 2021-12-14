@@ -21,6 +21,7 @@ namespace Scrabble
         List<Joueur> _joueurs;
         Cursor _curseur;
         int _indexTour;
+        int indexDicho = 0;
 
 
         public Jeu()
@@ -48,7 +49,7 @@ namespace Scrabble
             //définition du dictionnaire
             this._dicho = new Dictionnaire[1];
             string lang = Program.AskLanguage();
-            _dicho[0] = new Dictionnaire(lang);
+            _dicho[indexDicho] = new Dictionnaire(lang);
 
 
             string path = "../../../Files/Initialisation.txt";
@@ -92,7 +93,7 @@ namespace Scrabble
 
             //définition du dictionnaire
             this._dicho = new Dictionnaire[1];
-            _dicho[0] = new Dictionnaire(parts[0]);
+            _dicho[indexDicho] = new Dictionnaire(parts[0]);
 
             //définition des joeurs
             _joueurs = new List<Joueur> { };
@@ -193,13 +194,11 @@ namespace Scrabble
                 {
                     //plateau ne s'affiche pas après la premiere
 
-                    
-                    
-                    do
-                    {
+                    mot = Program.VerifieStringWord("Taper un mot à placer : ", _dicho[indexDicho]);
+                    /*do{
                         mot = Program.VerifieStringWord("Taper un mot : ");
-                    } while (mot.Length < 2 || mot.Length > 15 || !_dicho[0].RechDichoRecursif(mot, 0, _dicho[0].MotsTrie[mot.Length].Length));
-                    
+                    } while (mot.Length < 2 || mot.Length > 15 || !_dicho[0].RechDichoRecursif(mot, 0, _dicho[0].MotsTrie[mot.Length].Length));*/
+
                     mot = mot.ToUpper();
                     Console.WriteLine("votre mot \"" + mot + "\" est correct");
                     index++;

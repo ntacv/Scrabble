@@ -11,7 +11,7 @@ check au moins une lettre
 !!!check mots autour du mot placé pour toutes les directions
 Temps par tours
 
-
+Score speciaux
 verif mot sur la mm ligne
 verif main courante
 verif mot autour

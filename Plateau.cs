@@ -143,6 +143,7 @@ namespace Scrabble
             else Console.Write("null");
             Console.ResetColor();
         }
+        
 
         public void AddWord(string mot, int[] position, int orientation)
         {
