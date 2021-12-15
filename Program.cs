@@ -14,8 +14,7 @@ namespace Scrabble
             Thread.Sleep(1000);
             Console.ResetColor();
 
-
-
+            
             Jeu JeuTest = new Jeu();
             //JeuTest.PlaceWord();
             

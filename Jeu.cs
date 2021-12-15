@@ -15,7 +15,7 @@ namespace Scrabble
         //score spéciaux (TL DW)
 
 
-        Dictionnaire[] _dicho;
+        Dictionnaire[] _dicho; 
         Plateau _plateau;
         Sac_Jetons _sac_jetons;
         List<Joueur> _joueurs;
@@ -141,7 +141,7 @@ namespace Scrabble
             {
                 Joueur player = _joueurs[indexJoueur];
                 Console.Clear();
-                _plateau.ToStringColor(_curseur.Position);
+                //_plateau.ToStringColor(_curseur.Position);
 
                 //Repioche les lettres en moins
                 Random rdm = new Random();
@@ -175,27 +175,22 @@ namespace Scrabble
         public void PlaceWord(Joueur player, int indexTour)//joueur en cours 
         {
 
-            //déplacement curseur
-            //_curseur.AskMovm();
-            //_curseur.PlaceLettre(player.Main_Courante, _plateau);
-
-            //1er mot sur la case central
-
             string mot = null;
             int index = 0;
             int position = 0;
             int orientation = 0;
 
             
-
             do 
             {
                 do
                 {
                     //plateau ne s'affiche pas après la premiere
-
+                    _plateau.ToStringColor(_curseur.Position);
+                    player.ToStringGame();
                     //mot = Program.VerifieStringWord("Taper un mot à placer : ", _dicho[indexDicho]);
-                    do{
+                    do
+                    {
                         mot = Program.VerifieStringWord("Taper un mot : ",_dicho[indexDicho]);
                     } 
                     while (mot.Length < 2 || mot.Length > 15 || !_dicho[0].RechDichoRecursif(mot, 0, _dicho[indexDicho].MotsTrie[mot.Length].Length));
@@ -204,6 +199,7 @@ namespace Scrabble
                     Console.WriteLine("votre mot \"" + mot + "\" est correct");
                     index++;
 
+                    //1er mot sur la case centrale
                     if (indexTour > 0)
                     {
                         _curseur.AskMovm();
@@ -286,9 +282,11 @@ namespace Scrabble
             bool possible = false;
             int ligne = 0;
             int colonne = 0;
+            bool[] lettrePossible = null;
 
             if (mot != null && mot.Length != 0)
             {
+                lettrePossible = new bool[mot.Length];
                 if (orientation == 0)//horizontale
                 {
                     ligne = position[0];
@@ -303,8 +301,6 @@ namespace Scrabble
                 {
                     for (int i = 0; i < mot.Length; i++)
                     {
-
-
                         if (orientation == 0)//horizontale
                         {
                             ligne = position[0];
@@ -332,7 +328,17 @@ namespace Scrabble
                         }
                         else
                         {
-                            if (!player.Main_Courante.Contains(_sac_jetons.InfoJeton(mot[i])))
+                            bool InHand = false;
+                            for (int k = 0; k < player.Main_Courante.Count; k++)
+                            {
+                                if(player.Main_Courante[k].Lettre==mot[i])
+                                {
+                                    InHand=true;
+                                }
+                            }
+
+                            if ( !InHand )
+                                //!player.Main_Courante.Contains(_sac_jetons.InfoJeton(mot[i])))
                             {
                                     
                                 Console.WriteLine("Lettre non dans la main");
@@ -344,12 +350,15 @@ namespace Scrabble
                             {
                                 //remove main courante
                                 possible = true;
+                                Console.WriteLine(player.ToStringGame());
                                 player.Remove_Main_Courante(_sac_jetons.InfoJeton(mot[i]));
+                                
                                 //ou
                                 //return une list de char de la main et remove en dehors
                                 //player.Main_Courante_En_Cour.Add(_sac_jetons.InfoJeton(mot[i]));
                             }
                         }
+                        lettrePossible[i] = possible;
                     }
                 }
                 
@@ -377,6 +386,14 @@ namespace Scrabble
                     }
                 }
             */
+            }
+            possible = true;
+            for(int i = 0; i < mot.Length; i++)
+            {
+                if (!lettrePossible[i])
+                {
+                    possible = false;
+                }
             }
             return possible;
         }
@@ -448,19 +465,35 @@ namespace Scrabble
 
         }
 
-        
+        /* code score spéciaux
+
+        0 : case milieu/début
+        1 : case vide
+        2 : mot double
+        3 : mot triple
+        4 : lettre double
+        5 : lettre triple
+        A-Z* : Jetons
+
+        */
         public int CalculScore(string mot)
         {
             int score = 0;
             if(mot!=null && mot.Length != 0)
             {
+                int DW = 0;
+                int TW = 0;
+
                 for(int i=0; i < mot.Length; i++)
                 {
+                    char lettreJeton = _plateau.Board[_curseur.Position[0],_curseur.Position[0]];
+
                     Jeton lettre = _sac_jetons.InfoJeton(mot[i]);
                     score += lettre.Score;
                 }
             }
             return score;
         }
+        
     }
 }

@@ -61,7 +61,7 @@ namespace Scrabble
             }
         }*/
 
-        public override string ToString()
+        public string ToStringSave()
         {
             string txt = nom + " ; " + score + " ;\n";
             if(mots!=null && mots.Count != 0)

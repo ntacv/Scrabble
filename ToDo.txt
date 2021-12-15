@@ -4,7 +4,7 @@ Nathan and Clément
 
 
 ### Etape last week ###
-
+Jocker
 modifier le plateau (placer un mot)
 check des lettres dans la main
 check au moins une lettre
@@ -23,6 +23,11 @@ TEST UNITAIRE
 COMMENTAIRES
 RELECTURE (enlever le superflux)
 
+
+PROBLEME : 
+lettre surpassé en bout de mot
+mot placé une lettre avant
+pas trouve les lettre dans la main
 
 
 étapes :
