@@ -43,6 +43,11 @@ namespace Scrabble
             string txt = lettre + ", " + score + ", " + nombre;
             return txt;
         }
+        public string ToStringSave()
+        {
+            string txt = lettre + ";" + score + ";" + nombre;
+            return txt;
+        }
 
         public void Retire()
         {

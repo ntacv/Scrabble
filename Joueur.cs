@@ -12,17 +12,22 @@ namespace Scrabble
         int score;
         List<string> mots;
         List<Jeton> main_Courante;
-        List<Jeton> main_Courante_En_Cours;
+        List<Jeton> main_Courante_Save;
 
+        public List<string> Mots
+        {
+            get { return mots; }
+        }
         public List<Jeton> Main_Courante
         {
             get { return main_Courante; }
         }
-        public List<Jeton> Main_Courante_En_Cour
+        public List<Jeton> Main_Courante_Save
         {
-            get { return main_Courante_En_Cours; }
-            set { main_Courante_En_Cours = value; }
+            get { return main_Courante_Save; }
+            set { main_Courante_Save = value; }
         }
+
 
         //Constructeur
         public Joueur()
@@ -30,17 +35,21 @@ namespace Scrabble
             string nom = Program.VerifieString("Veuillez saisir un nom : ");
             this.nom = nom;
             score = 0;
-            mots = null;
+            mots = new List<string> { };
             main_Courante = new List<Jeton> { };
-            main_Courante_En_Cours = new List<Jeton> { };
+            main_Courante_Save = new List<Jeton> { };
         }
         public Joueur(string nom, int score, List<string> mots, List<Jeton> Main)
         {
             this.nom = nom;
             this.score = score;
-            this.mots = mots;
+            if (mots != null)
+            {
+                this.mots = mots;
+            }
+            else this.mots = new List<string> { };
             this.main_Courante = Main;
-            this.main_Courante_En_Cours = new List<Jeton> { };
+            this.main_Courante_Save = new List<Jeton> { };
         }
         /// <summary>
         /// définie les joueurs a partir d'un tableau de joueurs;
@@ -61,14 +70,14 @@ namespace Scrabble
             }
         }*/
 
-        public string ToStringSave()
+        public override string ToString()
         {
             string txt = nom + " ; " + score + " ;\n";
-            if(mots!=null && mots.Count != 0)
+            if (mots != null && mots.Count != 0)
             {
-                for(int i = 0; i < mots.Count; i++)
+                for (int i = 0; i < mots.Count; i++)
                 {
-                    txt += mots[i]+" ; ";
+                    txt += mots[i] + " ; ";
                 }
             }
             if (main_Courante != null && main_Courante.Count != 0)
@@ -81,6 +90,30 @@ namespace Scrabble
 
             return txt;
         }
+        public string ToStringSave()
+        {
+            string txt = nom + ";" + score + ";\r\n";
+            if (mots != null && mots.Count != 0)
+            {
+                for (int i = 0; i < mots.Count - 1; i++)
+                {
+                    txt += mots[i] + ";";
+                }
+                txt += mots[mots.Count - 1];
+            }
+            txt += "\r\n";
+            if (main_Courante != null && main_Courante.Count != 0)
+            {
+                for (int i = 0; i < main_Courante.Count - 1; i++)
+                {
+                    txt += main_Courante[i].Lettre + ";";
+                }
+                txt += main_Courante[main_Courante.Count - 1].Lettre;
+            }
+            else txt += "\r\n";
+
+            return txt;
+        }
         public string ToStringShort()
         {
             string txt = nom + " " + score;
@@ -89,7 +122,7 @@ namespace Scrabble
         public string ToStringGame()
         {
             string txt = nom + " ; " + score + " ;\n";
-            
+
             if (main_Courante != null && main_Courante.Count != 0)
             {
                 for (int i = 0; i < main_Courante.Count; i++)
@@ -115,20 +148,52 @@ namespace Scrabble
                 score += val;
             }
         }
-        
+
         public void Add_Main_Courante(Jeton monjeton)
         {
-            if(main_Courante.Count<7)
+            if (main_Courante.Count < 7)
             {
                 main_Courante.Add(monjeton);
             }
         }
+        public void Add_Main_Courante_Save(Jeton monjeton)
+        {
+            if (main_Courante_Save.Count < 7)
+            {
+                main_Courante_Save.Add(monjeton);
+            }
+        }
+
         public void Remove_Main_Courante(Jeton monjeton)
         {
             main_Courante.Remove(monjeton);
         }
+        public void Remove_Main_Courante_Save(Jeton monjeton)
+        {
+            main_Courante_Save.Remove(monjeton);
+        }
+        public void Replace_Main_Courante()
+        {
+            main_Courante = main_Courante_Save;
+
+            /*
+            for (int l = 0; l < main_Courante_Save.Count; l++)
+            {
+                main_Courante.Add(main_Courante_Save[l]);
+                main_Courante_Save.Remove(main_Courante_Save[l]);
+            }*/
+        }
+        public void Remove_AllMainCourante()
+        {
+            for (int i = 0; i < main_Courante.Count; i++)
+            {
+                main_Courante.Remove(main_Courante[i]);
+
+            }
+        }
+
+
         //public bool In_Main_Courante(Plateau plateau, string mot)
-        
-        
+
     }
 }

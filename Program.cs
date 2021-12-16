@@ -16,7 +16,8 @@ namespace Scrabble
 
             
             Jeu JeuTest = new Jeu();
-            //JeuTest.PlaceWord();
+
+            //JeuTest.SaveGame();
             
             /*
 
@@ -132,6 +133,22 @@ namespace Scrabble
             //1 : Commencer
             return init;
         }
+        public static int AskTour(Joueur player)
+        {
+            int init = 0;
+
+
+            string[] menu = new string[3] { "Placer un mot", "Repiocher", "Passer son tour" };
+
+            int index = MenuPlayer(menu, player);
+            if (index == 1) init = 1;
+            if (index == 2) init = 2;
+            //0 : placer
+            //1 : piocher
+            //2 : passer
+
+            return init;
+        }
         public static int AskConfirm()
         {
             int init = 0;
@@ -211,5 +228,59 @@ namespace Scrabble
             Console.Write(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(0, currentLineCursor-1);
         }
+        public static int MenuPlayer(string[] menu,Joueur player)
+        {
+            ConsoleKey inputKey;
+            int index = 0;
+            do
+            {
+                Console.Clear();
+                player.ToStringGame();
+                /*
+                int currentLineCursor = Console.CursorTop;
+                Console.SetCursorPosition(0, Console.CursorTop - menu.Length+1);
+                Console.Write(new string(' ', Console.WindowWidth));
+                Console.SetCursorPosition(0, currentLineCursor - menu.Length+1);
+                */
+                for (int i = 0; i < menu.Length; i++)
+                {
+                    if (i == index)
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                    }
+                    if (i == menu.Length - 1) Console.Write(menu[i]);
+                    else Console.WriteLine(menu[i]);
+                    Console.ResetColor();
+                }
+                inputKey = Console.ReadKey().Key;
+                if (inputKey == ConsoleKey.DownArrow && index < menu.Length - 1)//40 : Down arrow key
+                {
+                    index++;
+                }
+                if (inputKey == ConsoleKey.UpArrow && index > 0)//38 : Up arrow key
+                {
+                    index--;
+                }
+
+            } while (inputKey != ConsoleKey.Enter);
+            return index;
+        }
+
+        public static void ClearConsoleLine()
+        {
+            int currentLineCursor = Console.CursorTop;
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLineCursor);
+        }
+        public static void ClearConsoleLine2()
+        {
+            int currentLineCursor = Console.CursorTop;
+            Console.SetCursorPosition(0, Console.CursorTop-1);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, currentLineCursor-1);
+        }
     }
+    
 }

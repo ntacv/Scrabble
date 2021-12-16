@@ -4,22 +4,21 @@ Nathan and Clément
 
 
 ### Etape last week ###
-Jocker
-modifier le plateau (placer un mot)
-check des lettres dans la main
-check au moins une lettre
-!!!check mots autour du mot placé pour toutes les directions
-Temps par tours
-
-
-Score speciaux
-verif mot sur la mm ligne
-verif main courante
-verif mot autour
 
 Ou repiocher les lettres de la main
 ou 5tentatives dans les while (comme nombre joueurs)
 esc pour passer le tour
+
+Jocker
+!!!check mots autour du mot placé pour toutes les directions
+Temps par tours
+
+
+~~Score speciaux
+verif mot sur la mm ligne
+verif mot autour
+
+
 
 TEST UNITAIRE
 COMMENTAIRES
@@ -29,7 +28,13 @@ RELECTURE (enlever le superflux)
 PROBLEME : 
 lettre surpassé en bout de mot
 mot placé une lettre avant
-pas trouve les lettre dans la main
+
+
+
+
+
+
+
 
 
 étapes :

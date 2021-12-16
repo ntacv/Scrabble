@@ -81,6 +81,26 @@ namespace Scrabble
             return txt;
             
         }
+        public string ToStringSave()
+        {
+            //affiche coord ligne col
+
+            string txt = "";
+            if (plateau != null && plateau.Length != 0)
+            {
+                for (int i = 0; i < plateau.GetLength(0); i++)
+                {
+                    for (int j = 0; j < plateau.GetLength(1); j++)
+                    {
+                        txt += plateau[i, j] + "";
+                    }
+                    txt += "\r\n";
+                }
+            }
+            else txt += "null";
+            return txt;
+
+        }
         public void ToStringColor(int[] Position)
         {
             Console.Write("Plateau : \n");

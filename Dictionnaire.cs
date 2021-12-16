@@ -82,6 +82,7 @@ namespace Scrabble
                         return RechDichoRecursif(mot, milieu + 1, fin);
                     }
 
+                    #region Alternative for
                     /*
                     bool motSupMid = true;
                     bool motInfMid = true;
@@ -103,7 +104,8 @@ namespace Scrabble
                         return RechDichoRecursif(mot, debut, milieu - 1);
                     }
                     else return RechDichoRecursif(mot, milieu + 1, fin);
-                    */
+                    */ 
+                    #endregion
                 }
             }
             return exist;

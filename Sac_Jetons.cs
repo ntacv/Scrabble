@@ -47,6 +47,16 @@ namespace Scrabble
             }
             return txt;
         }
+        public string ToStringSave()
+        {
+            string txt = "";
+            for (int i = 0; i < sac.Length-1; i++)
+            {
+                txt += sac[i].ToStringSave() + "\r\n";
+            }
+            txt += sac[sac.Length-1].ToStringSave();
+            return txt;
+        }
 
         public Jeton Retire_Jeton(Random r)
         {
