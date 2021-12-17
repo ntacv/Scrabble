@@ -10,13 +10,16 @@ namespace Scrabble
     {
 
         string langue;
-        SortedList<int, string[]> motsTrie;
-
+        SortedList<int, string[]> motsTrie; // list qui se trie en fonction de la key (nombre de lettre) et qui fait un tableau de string (avec les mots du dictionnaires)
+        
+        #region paramètres
         public SortedList<int, string[]> MotsTrie
         {
             get { return motsTrie; }
         }
+        #endregion
 
+        //Constructeurs qui prend en paramètre la langue et qui recherche le fichier corespondant pour récupérer tout les mots
         public Dictionnaire(string langue)
         {
             if (langue != null && langue.Length != 0)
@@ -36,7 +39,8 @@ namespace Scrabble
             }
         }
 
-
+        #region ToString
+        //Affichage de chaque mot du dico
         public override string ToString()
         {
             string txt = "Langue : " + langue+"\n";
@@ -49,7 +53,16 @@ namespace Scrabble
             }
             return txt;
         }
+        #endregion
 
+
+        /// <summary>
+        /// Méthode qui cherche dans le dictionaire si le mot en paramètre est bien présent
+        /// </summary>
+        /// <param name="mot">mot à analyser</param>
+        /// <param name="debut">index du début du dictionaire</param>
+        /// <param name="fin">index de fin du dictionaire</param>
+        /// <returns>return vrai ou faux si le mot à alanyser est présent ou non</returns>
         public bool RechDichoRecursif(string mot, int debut, int fin)
         {
             bool exist = false;
@@ -60,7 +73,6 @@ namespace Scrabble
                 int index = motsTrie.IndexOfKey(key);
 
                 int milieu = (debut + fin) / 2;
-                //Console.Write(motsTrie[key][milieu] + " ; "+milieu+"   ");
 
                 if (fin < debut)
                 {
@@ -82,35 +94,13 @@ namespace Scrabble
                         return RechDichoRecursif(mot, milieu + 1, fin);
                     }
 
-                    #region Alternative for
-                    /*
-                    bool motSupMid = true;
-                    bool motInfMid = true;
-
-                    for (int i = 0; i < key; i++)
-                    { 
-                        if(mot[i] > motsTrie[key][milieu][i])
-                        {
-                            motSupMid = false;
-                        }
-                        if(mot[i] < motsTrie[key][milieu][i])
-                        {
-                            motInfMid = false;
-                        }
-                    }
-                    if (!motSupMid && motInfMid)
-                    {
-                        //mot inférieur au mot milieu
-                        return RechDichoRecursif(mot, debut, milieu - 1);
-                    }
-                    else return RechDichoRecursif(mot, milieu + 1, fin);
-                    */ 
-                    #endregion
+                    
                 }
             }
             return exist;
         }
-
+         
+        #region Alternative
         public bool RechFor(string mot)
         {
             bool exist = false;
@@ -131,6 +121,7 @@ namespace Scrabble
             }
             return exist;
         }
+        #endregion
 
 
     }

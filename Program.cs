@@ -16,28 +16,14 @@ namespace Scrabble
 
             
             Jeu JeuTest = new Jeu();
-
-            //JeuTest.SaveGame();
-            
-            /*
-
-            Sac_Jetons Sac = new Sac_Jetons();
-            Console.WriteLine(Sac.ToString());
-            Random r = new Random();
-            do
-            {
-                Jeton newOne = Sac.Retire_Jeton(r);
-                Console.WriteLine(newOne.ToString());
-            } while (Sac.Total != 0);
-            //Console.WriteLine(Sac.ToString() + "\n total : " + Sac.Total);
-
-            Plateau Plateau = new Plateau(' ');
-            Plateau.ToStringColor();
-            */
-
         }
 
 
+        /// <summary>
+        /// Vérification si une phrase est valide
+        /// </summary>
+        /// <param name="phrase">phrase à vérifier</param>
+        /// <returns></returns>
         public static string VerifieString(string phrase)
         {
             string txt=null;
@@ -50,6 +36,7 @@ namespace Scrabble
             
             return txt;
         }
+        //Méthode qui vérifie si un mot est valide 
         public static string VerifieStringWord(string phrase, Dictionnaire _dicho)
         {
             string txt = null;
@@ -60,7 +47,6 @@ namespace Scrabble
                 Console.Write(phrase);
                 txt = Convert.ToString(Console.ReadLine());
                 index_tentative++;
-                Console.WriteLine(index_tentative);
             } while (txt == null || txt.Length == 0);
             //index_tentative < 5// && txt == null || txt.Length == 0);
 
@@ -88,6 +74,7 @@ namespace Scrabble
             return mot;
             */
         }
+        //isletter
         public static bool VerifieChar(char lettre)
         {
             bool possible = false;
@@ -96,9 +83,15 @@ namespace Scrabble
                 possible = true;
             }
             return possible;
-        }//isletter
+        }
 
+        /// <summary>
+        /// Séries de méthodes qui demandent des modes de jeux différents
+        /// </summary>
+        /// <returns></returns>
+        #region Asks
 
+        
         public static string AskLanguage()
         {
             string[] menu = new string[] { "Francais", "English", "Español" };
@@ -137,6 +130,7 @@ namespace Scrabble
         {
             int init = 0;
 
+            Console.SetCursorPosition(0, Console.CursorTop +1);
 
             string[] menu = new string[3] { "Placer un mot", "Repiocher", "Passer son tour" };
 
@@ -175,7 +169,13 @@ namespace Scrabble
             // 1 : verticale
             return init;
         }
-
+        #endregion
+        
+        /// <summary>
+        /// Méthode menu qui permet de faire des choix avec les flèches du clavier
+        /// </summary>
+        /// <param name="menu"></param>
+        /// <returns>return un nombre qui indique quelle option on a choisi</returns>
         public static int Menu(string[] menu)
         {
             ConsoleKey inputKey;
@@ -183,12 +183,6 @@ namespace Scrabble
             do
             {
                 Console.Clear();
-                /*
-                int currentLineCursor = Console.CursorTop;
-                Console.SetCursorPosition(0, Console.CursorTop - menu.Length+1);
-                Console.Write(new string(' ', Console.WindowWidth));
-                Console.SetCursorPosition(0, currentLineCursor - menu.Length+1);
-                */
                 for (int i = 0; i < menu.Length; i++)
                 {
                     if (i == index)
@@ -213,39 +207,43 @@ namespace Scrabble
             } while (inputKey != ConsoleKey.Enter);
             return index;
         }
-
-        public static void ClearConsoleLine()
-        {
-            int currentLineCursor = Console.CursorTop;
-            Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, currentLineCursor);
-        }
-        public static void ClearConsoleLine2()
-        {
-            int currentLineCursor = Console.CursorTop;
-            Console.SetCursorPosition(0, Console.CursorTop-1);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, currentLineCursor-1);
-        }
-        public static int MenuPlayer(string[] menu,Joueur player)
+        /// <summary>
+        /// Même chose que pour la fonction Menu mais avec un affichage différent qui rajoute la main du joueur
+        /// </summary>
+        /// <param name="menu"></param>
+        /// <param name="player">Nom du joueur en cour</param>
+        /// <returns></returns>
+        public static int MenuPlayer(string[] menu, Joueur player)
         {
             ConsoleKey inputKey;
             int index = 0;
+
+            player.ToStringGame();
+            Console.SetCursorPosition(0, Console.CursorTop +2);
+            /*
             do
             {
-                Console.Clear();
                 player.ToStringGame();
-                /*
+                Console.WriteLine("Voici votre main, appuier sur entrer pour continuer...");
+            } while (ConsoleKey.Enter != Console.ReadKey().Key);
+            */
+            do
+            {
                 int currentLineCursor = Console.CursorTop;
-                Console.SetCursorPosition(0, Console.CursorTop - menu.Length+1);
-                Console.Write(new string(' ', Console.WindowWidth));
-                Console.SetCursorPosition(0, currentLineCursor - menu.Length+1);
-                */
+
+                for (int j = 0; j < menu.Length; j++)
+                {
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                    Console.Write(new string(' ', Console.WindowWidth));
+                }
+                //Console.SetCursorPosition(0, currentLineCursor - menu.Length+1);
+
+
                 for (int i = 0; i < menu.Length; i++)
                 {
                     if (i == index)
                     {
+
                         Console.BackgroundColor = ConsoleColor.White;
                         Console.ForegroundColor = ConsoleColor.Black;
                     }
@@ -263,10 +261,16 @@ namespace Scrabble
                     index--;
                 }
 
+
+                player.ToStringGame();
+
             } while (inputKey != ConsoleKey.Enter);
             return index;
         }
 
+        /// <summary>
+        /// Méthode qui remplace la foncion Console.Clear() mais en moin radicale
+        /// </summary>
         public static void ClearConsoleLine()
         {
             int currentLineCursor = Console.CursorTop;
@@ -281,6 +285,7 @@ namespace Scrabble
             Console.Write(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(0, currentLineCursor-1);
         }
+        
     }
     
 }

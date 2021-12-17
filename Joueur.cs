@@ -14,6 +14,8 @@ namespace Scrabble
         List<Jeton> main_Courante;
         List<Jeton> main_Courante_Save;
 
+        #region Paramètres
+
         public List<string> Mots
         {
             get { return mots; }
@@ -27,7 +29,7 @@ namespace Scrabble
             get { return main_Courante_Save; }
             set { main_Courante_Save = value; }
         }
-
+        #endregion
 
         //Constructeur
         public Joueur()
@@ -39,6 +41,12 @@ namespace Scrabble
             main_Courante = new List<Jeton> { };
             main_Courante_Save = new List<Jeton> { };
         }
+
+
+        /// <summary>
+        /// définie les joueurs a partir d'un tableau de joueurs;
+        /// </summary>
+        /// <param name="joueurs">tableau de lignes pour chaque joueurs</param>
         public Joueur(string nom, int score, List<string> mots, List<Jeton> Main)
         {
             this.nom = nom;
@@ -51,25 +59,11 @@ namespace Scrabble
             this.main_Courante = Main;
             this.main_Courante_Save = new List<Jeton> { };
         }
-        /// <summary>
-        /// définie les joueurs a partir d'un tableau de joueurs;
-        /// </summary>
-        /// <param name="joueurs">tableau de lignes pour chaque joueurs avec ';' entre les attributs</param>
-        /*public Joueur(string[] joueurs)
-        {
-            if (joueurs != null && joueurs.Length != 0)
-            {
-                foreach (string joueur in joueurs)
-                {
-                    string[] joueurParam = joueur.Split(';');
-                    string nom = joueurParam[0];
-                    int score = Convert.ToInt32(joueurParam[1]);
-                    string[] mots = joueurParam[2].Split(',');
-                    Joueur moi = new Joueur(nom, score, mots);
-                }
-            }
-        }*/
+        
+        
 
+        #region toString
+        
         public override string ToString()
         {
             string txt = nom + " ; " + score + " ;\n";
@@ -114,11 +108,15 @@ namespace Scrabble
 
             return txt;
         }
+
+        //Affiche juste le nom et le score du joueur
         public string ToStringShort()
         {
             string txt = nom + " " + score;
             return txt;
         }
+
+        //Affiche le nom, le score et la main courante
         public string ToStringGame()
         {
             string txt = nom + " ; " + score + " ;\n";
@@ -131,8 +129,13 @@ namespace Scrabble
                 }
             }
 
+
             return txt;
         }
+        #endregion
+
+
+        #region add et remove des lettres du sac de jeton dans les mains courantes
 
         public void Add_Mot(string mot)
         {
@@ -168,21 +171,17 @@ namespace Scrabble
         {
             main_Courante.Remove(monjeton);
         }
+
         public void Remove_Main_Courante_Save(Jeton monjeton)
         {
             main_Courante_Save.Remove(monjeton);
         }
+
         public void Replace_Main_Courante()
         {
-            main_Courante = main_Courante_Save;
-
-            /*
-            for (int l = 0; l < main_Courante_Save.Count; l++)
-            {
-                main_Courante.Add(main_Courante_Save[l]);
-                main_Courante_Save.Remove(main_Courante_Save[l]);
-            }*/
+            main_Courante = main_Courante_Save;           
         }
+
         public void Remove_AllMainCourante()
         {
             for (int i = 0; i < main_Courante.Count; i++)
@@ -191,9 +190,6 @@ namespace Scrabble
 
             }
         }
-
-
-        //public bool In_Main_Courante(Plateau plateau, string mot)
-
+        #endregion
     }
 }

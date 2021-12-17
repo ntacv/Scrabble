@@ -15,7 +15,7 @@ Temps par tours
 
 
 ~~Score speciaux
-verif mot sur la mm ligne
+!!!verif mot sur la mm ligne
 verif mot autour
 
 

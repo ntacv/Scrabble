@@ -9,10 +9,12 @@ namespace Scrabble
     {
         char[,] plateau;
 
+        #region Paramètres
         public char[,] Board
         {
             get { return plateau; }
         }
+        #endregion
 
         /* code score spéciaux
 
@@ -25,6 +27,8 @@ namespace Scrabble
         A-Z* : Jetons
 
         */
+
+        //Constructeur 
         public Plateau(string content)
         {
             if (content != null && content.Length != 0)
@@ -41,29 +45,12 @@ namespace Scrabble
                 }
             }
         }
-        /*
-        public Plateau(string content)
-        {
-            if(content!=null && content.Length != 0) { 
-                this.plateau = new char[15, 15];
-                string[] allLines = content.Split("\r\n");
 
-                for (int i = 0; i<allLines.Length; i++)
-                {
-                    string[] line = allLines[i].Split(';');
-                    
-                    for(int j = 0; j < 15; j++)
-                    {
-                        this.plateau[i, j] = Convert.ToChar(line[j]);
-                    }
-                }
-            }
-        }
-        */
-
+        #region Méthode toString
+        //Méthode ToString qui affiche notre plateau
         public override string ToString()
         {
-            //affiche coord ligne col
+            //affiche coord ligne coll
 
             string txt = "Plateau : \n";
             if (plateau != null && plateau.Length != 0)
@@ -81,6 +68,9 @@ namespace Scrabble
             return txt;
             
         }
+        #endregion
+
+
         public string ToStringSave()
         {
             //affiche coord ligne col
@@ -101,14 +91,22 @@ namespace Scrabble
             return txt;
 
         }
+
+        //Méthode qui converti une matrice de chiffre en couleur pour former le plateau du srabble
         public void ToStringColor(int[] Position)
         {
-            Console.Write("Plateau : \n");
+            Console.Write("Plateau : \n" +
+                "     2   4   6   8   10  12  14  \n" +
+                "   1   3   5   7   9   11  13  15\n");
             Console.ForegroundColor = ConsoleColor.Yellow;
             if (plateau != null && plateau.Length != 0)
             {
                 for (int i = 0; i < plateau.GetLength(0); i++)
                 {
+                    if (i > 8)
+                    {
+                        Console.Write((i+1)+" ");
+                    }else Console.Write(" "+(i+1)+" ");
                     for (int j = 0; j < plateau.GetLength(1); j++)
                     {
                        
@@ -165,6 +163,13 @@ namespace Scrabble
         }
         
 
+
+        /// <summary>
+        /// Méthode qui ajoute un mot sur notre plateau 
+        /// </summary>
+        /// <param name="mot">mot à ajouter</param>
+        /// <param name="position">index ligne et colonne ou le mot est placé</param>
+        /// <param name="orientation">choix de la direction (sois verticale ou horizontale)</param>
         public void AddWord(string mot, int[] position, int orientation)
         {
 
