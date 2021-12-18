@@ -15,7 +15,14 @@ namespace Scrabble
         List<Jeton> main_Courante_Save;
 
         #region Paramètres
-
+        public string Nom
+        {
+            get { return nom; }
+        }
+        public int Score
+        {
+            get{ return score; }
+        }
         public List<string> Mots
         {
             get { return mots; }

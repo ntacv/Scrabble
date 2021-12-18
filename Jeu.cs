@@ -195,6 +195,20 @@ namespace Scrabble
                 Thread.Sleep(sleepTime);
 
             } while (EndGame());
+
+            //Affichage finale du gagnant
+            Console.WriteLine("Bravo le jeu est fini ! ");
+            int scoreMax = 0;
+            int indexGagnant = 0;
+            for(int j=0; j<_joueurs.Count; j++)
+            {
+                if (_joueurs[j].Score > scoreMax)
+                {
+                    scoreMax = _joueurs[j].Score;
+                    indexGagnant = j;
+                }
+            }
+            Console.WriteLine(_joueurs[indexGagnant].Nom + " est le gagnant !");
         }
 
         /// <summary>
@@ -225,7 +239,7 @@ namespace Scrabble
 
             do
             {
-                choixTour = Program.AskTour(player);
+                choixTour = Program.AskTour(player, _plateau, _curseur);
 
                 switch (choixTour)
                 {
@@ -486,8 +500,8 @@ namespace Scrabble
         public bool ConfirmOtherWord(string mot, int orientation, int[] position, Joueur player)
         {
             bool possible = false;
-            int ligne = 0;
-            int colonne = 0;
+            //int ligne = 0;
+            //int colonne = 0;
             bool[] lettrePossible = null;
 
             possible = ConfirmeInline(mot, orientation, position, player);
@@ -614,8 +628,8 @@ namespace Scrabble
             int score = 0;
             if(mot!=null && mot.Length != 0)
             {
-                int DW = 0;
-                int TW = 0;
+                //int DW = 0;
+                //int TW = 0;
                 int ligne = 0;
                 int colonne = 0;
 
@@ -634,7 +648,7 @@ namespace Scrabble
                     }
 
                     char lettreJeton = _plateau.Board[ligne,colonne];
-
+                    /*
                     switch (lettreJeton)
                     {
                         case '2':
@@ -646,8 +660,10 @@ namespace Scrabble
                         default:
                             break;
                     }
-
+                    */
                     Jeton lettre = _sac_jetons.InfoJeton(mot[i]);
+                    score += lettre.Score;
+                    /*
                     if (lettreJeton == 4)
                     {
                         score += lettre.Score*2;
@@ -663,7 +679,9 @@ namespace Scrabble
                             score += lettre.Score;
                         }
                     }
+                    */
                 }
+                /*
                 for (int k = 0; k <= DW; k++)
                 {
                     score *= 2;
@@ -672,6 +690,7 @@ namespace Scrabble
                 {
                     score *= 3;
                 }
+                */
             }
             return score;
         }

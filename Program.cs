@@ -14,7 +14,10 @@ namespace Scrabble
             Thread.Sleep(1000);
             Console.ResetColor();
 
-            
+
+            //Scrabble.UnitTest1.TestMethod1();
+
+
             Jeu JeuTest = new Jeu();
         }
 
@@ -131,7 +134,7 @@ namespace Scrabble
             //1 : Commencer
             return init;
         }
-        public static int AskTour(Joueur player)
+        public static int AskTour(Joueur player, Plateau plateau, Cursor cursor)
         {
             int init = 0;
 
@@ -139,7 +142,7 @@ namespace Scrabble
 
             string[] menu = new string[3] { "Placer un mot", "Repiocher", "Passer son tour" };
 
-            int index = MenuPlayer(menu, player);
+            int index = MenuPlayer(menu, player, plateau, cursor);
             if (index == 1) init = 1;
             if (index == 2) init = 2;
             //0 : placer
@@ -231,7 +234,7 @@ namespace Scrabble
         /// <param name="menu"></param>
         /// <param name="player">Nom du joueur en cour</param>
         /// <returns></returns>
-        public static int MenuPlayer(string[] menu, Joueur player)
+        public static int MenuPlayer(string[] menu, Joueur player, Plateau plateau, Cursor cursor)
         {
             ConsoleKey inputKey;
             int index = 0;
@@ -239,6 +242,7 @@ namespace Scrabble
             do
             {
                 Console.Clear();
+                plateau.ToStringColor(cursor.Position);
                 Console.WriteLine(player.ToStringGame());
 
                 for (int i = 0; i < menu.Length; i++)
