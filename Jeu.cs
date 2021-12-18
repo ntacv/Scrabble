@@ -223,28 +223,38 @@ namespace Scrabble
 
             int choixTour = 0;
 
-            while (Program.AskTour(player) == 1)
+            do
             {
-                if (choixTour == 1)//Repiocher la main
+                choixTour = Program.AskTour(player);
+
+                switch (choixTour)
                 {
-                    player.Remove_AllMainCourante();
-                    for (int l = 0; l < player.Main_Courante.Count; l++)
-                    {
-                        player.Add_Main_Courante(_sac_jetons.Retire_Jeton(rdm));
-                    }
+                    case 0://continuer
+                        break;
+                    case 1://Repiocher la main
+                        player.Remove_AllMainCourante();
+                        for (int l = 0; l < player.Main_Courante.Count; l++)
+                        {
+                            player.Add_Main_Courante(_sac_jetons.Retire_Jeton(rdm));
+                        }
+                        break;
+                    case 2://Passer son tour
+                        return;
+                    default:
+                        break;
                 }
-                else
-                {
-                    if (choixTour == 2) { return; }//Passer son tour
-                    else { break; }//Ou placer un mot : 
-                }
-            }
-            
+
+            } while (choixTour == 1);
 
             do
             {
                 do
                 {
+
+                    while (player.Main_Courante.Count < 7)
+                    {
+                        player.Add_Main_Courante(_sac_jetons.Retire_Jeton(rdm));
+                    }
                     Console.Clear();
                     _plateau.ToStringColor(_curseur.Position);
                     Console.WriteLine(player.ToStringGame());
@@ -306,6 +316,7 @@ namespace Scrabble
                     orientation = Program.AskDirection();
 
                 } while (!ConfirmWord(mot, orientation, _curseur.Position, player));
+                
                 indexConfirm = Program.AskConfirm();
             }
             while (indexConfirm != 0);
@@ -316,7 +327,7 @@ namespace Scrabble
             //place mot : mot//coordonnees//Hori/Vertical
             _plateau.AddWord(mot,_curseur.Position,orientation);
             player.Add_Mot(mot);
-            player.Add_Score(CalculScore(mot));
+            player.Add_Score(CalculScore(mot, orientation));
 
             //Repioche les lettres en moins
             while (player.Main_Courante.Count < 7)
@@ -409,6 +420,7 @@ namespace Scrabble
                             else
                             {
                                 possible = false;
+                                lettrePossible[i] = false;
                                 break;
                             }
                         }
@@ -426,6 +438,7 @@ namespace Scrabble
                             {                           
                                 jocker--;
                                 player.Remove_Main_Courante(_sac_jetons.InfoJeton('*'));
+                                possible = true;
                                 break;
                             }
                             if ( !InHand && jocker==0)
@@ -458,13 +471,12 @@ namespace Scrabble
             possible = true;
             for(int i = 0; i < mot.Length; i++)
             {
-                
                 if (!lettrePossible[i])
                 {
                     possible = false;
                 }
             }
-            if (!possible)
+            if (!possible && player.Main_Courante_Save.Count!=0)
             {
                 player.Replace_Main_Courante();
             }       
@@ -597,17 +609,31 @@ namespace Scrabble
         /// </summary>
         /// <param name="mot">mot donc on veut calculer le score</param>
         /// <returns>return le score calculé</returns>
-        public int CalculScore(string mot)
+        public int CalculScore(string mot, int orientation)
         {
             int score = 0;
             if(mot!=null && mot.Length != 0)
             {
                 int DW = 0;
                 int TW = 0;
+                int ligne = 0;
+                int colonne = 0;
 
                 for(int i=0; i < mot.Length; i++)
                 {
-                    char lettreJeton = _plateau.Board[_curseur.Position[0],_curseur.Position[0]];
+
+                    if (orientation == 0)//horizontale
+                    {
+                        ligne = _curseur.Position[0];
+                        colonne = _curseur.Position[1] + i;
+                    }
+                    else //Verticale
+                    {
+                        ligne = _curseur.Position[0] + i;
+                        colonne = _curseur.Position[1];
+                    }
+
+                    char lettreJeton = _plateau.Board[ligne,colonne];
 
                     switch (lettreJeton)
                     {
@@ -637,16 +663,14 @@ namespace Scrabble
                             score += lettre.Score;
                         }
                     }
-
-                    for(int k = 0; k <= DW; k++)
-                    {
-                        score *= 2;
-                    }
-                    for (int k = 0; k <= TW; k++)
-                    {
-                        score *= 3;
-                    }
-
+                }
+                for (int k = 0; k <= DW; k++)
+                {
+                    score *= 2;
+                }
+                for (int k = 0; k <= TW; k++)
+                {
+                    score *= 3;
                 }
             }
             return score;

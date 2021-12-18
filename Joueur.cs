@@ -178,10 +178,12 @@ namespace Scrabble
 
         public void Replace_Main_Courante()
         {
-            if (main_Courante_Save.Count != 0)
+            /*if (main_Courante_Save.Count != 0)
             {
                 main_Courante = main_Courante_Save;
             }
+            */
+            main_Courante = main_Courante_Save;
         }
 
         public void Remove_AllMainCourante()

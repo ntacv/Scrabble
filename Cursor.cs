@@ -58,7 +58,7 @@ namespace Scrabble
             {
                 Console.Clear();
                 plateau.ToStringColor(index);
-
+                Console.Write("Utilisez les flèches pour placer la première lettre du mot");
                 /*for (int i = 0; i < plateau.Board.GetLength(0); i++)
                 {
                     if (i == index[0])
