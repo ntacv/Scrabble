@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Scrabble
 {
-    class Sac_Jetons
+    public class Sac_Jetons
     {
         Jeton[] sac;
         int total;
@@ -91,7 +91,9 @@ namespace Scrabble
             }
             return jeton;
         }
-
+        /// <summary>
+        /// Calcul le nombre de jetons restant dans le sac
+        /// </summary>
         public void CalculTotal()
         {
             int total=0;
@@ -101,6 +103,11 @@ namespace Scrabble
             }
             this.total = total;
         }
+        /// <summary>
+        /// Permet d'avoir les infos d'un jeton a partir d'un char
+        /// </summary>
+        /// <param name="lettre">char à rechercher</param>
+        /// <returns>Le jeton correspondant</returns>
         public Jeton InfoJeton(char lettre)
         {
             Jeton jeton = new Jeton('$',0,0) ;

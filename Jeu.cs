@@ -8,9 +8,11 @@ using System.Diagnostics;
 
 namespace Scrabble
 {
-    class Jeu
+    public class Jeu
     {
-        Dictionnaire[] _dicho; 
+        #region Attributs
+
+        Dictionnaire[] _dicho;
         Plateau _plateau;
         Sac_Jetons _sac_jetons;
         List<Joueur> _joueurs;
@@ -21,33 +23,18 @@ namespace Scrabble
         int indexJoueur = 0;
         Stopwatch _time;
         double _lapLasting;
-        double _timeLeft;
+        int _timeLeft;
 
-        
+        #endregion
+
         //Constructeur qui lance la partie
         public Jeu()
         {
-            /*
-            _time = new Stopwatch();
-            _time.Start();
-            int i = 0;
-            while (_time.ElapsedMilliseconds < 10000)
-            {
-                //Console.Clear();
-                //Console.WriteLine(_time.Elapsed);
-                ConsoleKey key = Console.ReadKey().Key;
-                Console.WriteLine(key.ToString());
-                i++;
-            }
-            _time.Stop();
-            */
+            
             int init = Program.AskSaves();
             _indexTour=0;
 
             
-            _lapLasting = 10;
-            
-
             if (init == 0) Initialisation();
             else Sauvegarde();
 
@@ -65,6 +52,8 @@ namespace Scrabble
             this._dicho = new Dictionnaire[1];
             lang = Program.AskLanguage();
             _dicho[indexDicho] = new Dictionnaire(lang);
+
+            _lapLasting = Program.AskTime("Combien de temps dure un tour (s) : ");
 
             //recherche du texte d'initialisation
             string path = "../../../Files/Initialisation.txt";
@@ -89,12 +78,7 @@ namespace Scrabble
                 add = Program.AskJoueur();
             } while (add == 0 && nb<4);
 
-
             _indexTour = 0;
-
-            //Console.WriteLine(JoueurToString());
-
-
         }
         /// <summary>
         /// Méthode qui va chercher le fichier de sauvegarde
@@ -104,29 +88,37 @@ namespace Scrabble
             
             string path = "../../../Files/Sauvegarde.txt";
             string content = ReadFile(path);
-            string[] parts = content.Split("\r\n\r\n");
+            string[] parts = content.Split("\r\n\r\n\r\n\r\n");
 
-            _plateau = new Plateau(parts[1]);
+            _plateau = new Plateau(parts[2]);
             _curseur = new Cursor(_plateau);
-            _sac_jetons = new Sac_Jetons(parts[2]);
+            _sac_jetons = new Sac_Jetons(parts[3]);
 
             //définition du dictionnaire
             this._dicho = new Dictionnaire[1];
             _dicho[indexDicho] = new Dictionnaire(parts[0]);
             lang = parts[0];
+            //définition du temps
+            _lapLasting = Convert.ToDouble(parts[1]);
             //définition des joeurs
             _joueurs = new List<Joueur> { };
             
-            for(int i=3;i<parts.Length;i++)
+            for(int i=4;i<parts.Length;i++)
             {
                 string[] lines = parts[i].Split("\r\n");
                 string[] line1 = lines[0].Split(';');
-                string[] tabMot = lines[1].Split(';');
-                List<string> listMot = new List<string> { };
-                for(int j=0; j < tabMot.Length; j++)
+                string[] tabMot = new string[0] { };
+                List<string> listMot = new List<string>();
+                if (lines[1] != null && lines[1].Length != 0)
                 {
-                    listMot.Add(tabMot[j]);
+                    tabMot = lines[1].Split(';');
+                    listMot = new List<string> { };
+                    for (int j = 0; j < tabMot.Length; j++)
+                    {
+                        listMot.Add(tabMot[j]);
+                    }
                 }
+                
 
                 string[] mainChar = lines[2].Split(';');
                 List<Jeton> mainCourante = new List<Jeton> { };
@@ -157,44 +149,37 @@ namespace Scrabble
         public bool SaveGame()
         {
 
-            string txt = lang + "\r\n\r\n";
-
-            txt += _plateau.ToStringSave() + "\r\n";
-            txt += _sac_jetons.ToStringSave() + "\r\n\r\n";
+            string txt = lang + "\r\n\r\n\r\n\r\n";
+            txt += _lapLasting + "\r\n\r\n\r\n\r\n";
+            txt += _plateau.ToStringSave() + "\r\n\r\n\r\n";
+            txt += _sac_jetons.ToStringSave() + "\r\n\r\n\r\n\r\n";
             for(int i=0;i<_joueurs.Count-1; i++)
             {
-                txt += _joueurs[i].ToStringSave() + "\r\n\r\n";
+                txt += _joueurs[i].ToStringSave() + "\r\n\r\n\r\n\r\n";
             }
             txt += _joueurs[_joueurs.Count-1].ToStringSave();
 
-            Console.Write(txt);
             WriteFile("../../../Files/Sauvegarde.txt", txt);
-
-
             return true;
-        }
-        
-        //Lance la méthode Ingame
-        public void StartGame()
-        {
-            InGame();
         }
         
         /// <summary>
         /// Méthode qui définit chaque tour avant la fin de la partie
         /// </summary>
-        public void InGame()
+        public void StartGame()
         {
             
             do
             {
                 Joueur player = _joueurs[indexJoueur];
                 Console.Clear();
-                //_plateau.ToStringColor(_curseur.Position);
 
-                
+                Console.Write("C'est au tour de ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write(player.ToStringShort());
+                Console.ResetColor();
 
-                Console.WriteLine("C'est au tour de " + player.ToStringGame());
+
                 PlaceWord(player, _indexTour);
                 SaveGame();
 
@@ -218,78 +203,78 @@ namespace Scrabble
         /// <returns>vrai si la partie est finie</returns>
         public bool EndGame()
         {
-            return _sac_jetons.Total == 0;
+            _sac_jetons.CalculTotal();
+            return _sac_jetons.Total != 0;
         }
         
         /// <summary>
         /// Permet de demander les informations pour placer un mot
         /// </summary>
-        /// <param name="player">Jouer en cour</param>
+        /// <param name="player">Joueur en cours</param>
         /// <param name="indexTour">numéro du tour</param>
         public void PlaceWord(Joueur player, int indexTour)//joueur en cours 
         {
 
             string mot = null;
             int index = 0;
-            int position = 0;
             int orientation = 0;
             int indexConfirm = 0;
-            Random rdmRepioche;
+            Random rdm = new Random();
 
-            int choixTour = Program.AskTour(player);
-            if(choixTour == 1)//Repiocher la main
+            int choixTour = 0;
+
+            while (Program.AskTour(player) == 1)
             {
-
-                player.Remove_AllMainCourante();
-                for(int l=0;l<player.Main_Courante.Count; l++)
+                if (choixTour == 1)//Repiocher la main
                 {
-                    rdmRepioche = new Random();
-                    player.Add_Main_Courante(_sac_jetons.Retire_Jeton(rdmRepioche));
+                    player.Remove_AllMainCourante();
+                    for (int l = 0; l < player.Main_Courante.Count; l++)
+                    {
+                        player.Add_Main_Courante(_sac_jetons.Retire_Jeton(rdm));
+                    }
+                }
+                else
+                {
+                    if (choixTour == 2) { return; }//Passer son tour
+                    else { break; }//Ou placer un mot : 
                 }
             }
-            else
-            {
-                if(choixTour == 2)
-                {
-                    return; 
-                }
-            }
-
+            
 
             do
             {
-                if (indexConfirm != 0)
-                {
-                    Console.WriteLine(player.ToStringGame());
-                }
-
                 do
                 {
-                    //plateau ne s'affiche pas après la premiere
+                    Console.Clear();
                     _plateau.ToStringColor(_curseur.Position);
                     Console.WriteLine(player.ToStringGame());
-                    
+
                     _time = new Stopwatch();
                     _time.Start();
 
-                    while (_time.ElapsedMilliseconds < _lapLasting * 1000)
+                    do
                     {
-                        _timeLeft = _lapLasting - _time.Elapsed.TotalSeconds;
-                    
-                        //mot = Program.VerifieStringWord("Taper un mot à placer : ", _dicho[indexDicho]);
-                        do
+                        _timeLeft = Convert.ToInt32(_lapLasting - _time.Elapsed.TotalSeconds);
+                        Console.WriteLine("Temps restant : " + _timeLeft + "s");
+                        mot = Program.VerifieStringWord("Taper un mot : ", _dicho[indexDicho]);
+                        if(_time.ElapsedMilliseconds > _lapLasting * 1000)
                         {
-                                Console.WriteLine("Temps restant : " + _timeLeft + "s");
-                                mot = Program.VerifieStringWord("Taper un mot : ", _dicho[indexDicho]);
+                            Console.WriteLine("Time finished");
+                            Thread.Sleep(1000);
+                            return;
                         }
-                        while (mot.Length < 2 || mot.Length > 15 || !_dicho[indexDicho].RechDichoRecursif(mot, 0, _dicho[indexDicho].MotsTrie[mot.Length].Length-1));
-
-                        mot = mot.ToUpper();
-                        Console.WriteLine("votre mot \"" + mot + "\" est correct");
-                        index++;
-                    
                     }
+                    while ( (mot.Length < 2 || mot.Length > 15 || 
+                    !_dicho[indexDicho].RechDichoRecursif(mot, 0, _dicho[indexDicho].MotsTrie[mot.Length].Length-1))
+                    && _time.ElapsedMilliseconds < _lapLasting * 1000);
+
                     _time.Stop();
+
+
+                    mot = mot.ToUpper();
+                    Console.WriteLine("votre mot \"" + mot + "\" est correct");
+                    index++;
+                    
                     
                     //1er mot sur la case centrale
                     if (indexTour > 0)
@@ -334,7 +319,6 @@ namespace Scrabble
             player.Add_Score(CalculScore(mot));
 
             //Repioche les lettres en moins
-            Random rdm = new Random();
             while (player.Main_Courante.Count < 7)
             {
                 player.Add_Main_Courante(_sac_jetons.Retire_Jeton(rdm));

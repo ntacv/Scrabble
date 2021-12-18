@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Scrabble
 {
-    class Joueur
+    public class Joueur
     {
         //Attributs
         string nom;
@@ -41,7 +41,6 @@ namespace Scrabble
             main_Courante = new List<Jeton> { };
             main_Courante_Save = new List<Jeton> { };
         }
-
 
         /// <summary>
         /// définie les joueurs a partir d'un tableau de joueurs;
@@ -179,7 +178,10 @@ namespace Scrabble
 
         public void Replace_Main_Courante()
         {
-            main_Courante = main_Courante_Save;           
+            if (main_Courante_Save.Count != 0)
+            {
+                main_Courante = main_Courante_Save;
+            }
         }
 
         public void Remove_AllMainCourante()

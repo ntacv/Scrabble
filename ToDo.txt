@@ -1,28 +1,21 @@
 Scrabble game project
-
 Nathan and Clément
 
 
 ### Etape last week ###
 
-Ou repiocher les lettres de la main
-ou 5tentatives dans les while (comme nombre joueurs)
-esc pour passer le tour
-
-Jocker
+~~Jocker
 !!!check mots autour du mot placé pour toutes les directions
-Temps par tours
-
-
-~~Score speciaux
+//Temps par tours
+~Score speciaux
 !!!verif mot sur la mm ligne
 verif mot autour
 
 
 
-TEST UNITAIRE
-COMMENTAIRES
-RELECTURE (enlever le superflux)
+//TEST UNITAIRE
+//COMMENTAIRES
+//RELECTURE (enlever le superflux)
 
 
 PROBLEME : 

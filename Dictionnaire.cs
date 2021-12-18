@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Scrabble
 {
-    class Dictionnaire
+    public class Dictionnaire
     {
 
         string langue;

@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Scrabble
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -19,6 +19,8 @@ namespace Scrabble
         }
 
 
+
+        #region Vérification
         /// <summary>
         /// Vérification si une phrase est valide
         /// </summary>
@@ -26,14 +28,14 @@ namespace Scrabble
         /// <returns></returns>
         public static string VerifieString(string phrase)
         {
-            string txt=null;
+            string txt = null;
 
             do
             {
                 Console.Write(phrase);
                 txt = Convert.ToString(Console.ReadLine());
-            } while (txt == null || txt.Length==0);
-            
+            } while (txt == null || txt.Length == 0);
+
             return txt;
         }
         //Méthode qui vérifie si un mot est valide 
@@ -51,39 +53,42 @@ namespace Scrabble
             //index_tentative < 5// && txt == null || txt.Length == 0);
 
             return txt;
+            #region Alternative
             /*
-            string mot = null;
-            //index pour passer le tour apres 5 tentative
-            int index_tentative = 0;
-            do
-            {
-                Console.Write(phrase);
-                mot = Convert.ToString(Console.ReadLine());
-                if(mot == "*")
+                string mot = null;
+                //index pour passer le tour apres 5 tentative
+                int index_tentative = 0;
+                do
                 {
-                    mot = "";
+                    Console.Write(phrase);
+                    mot = Convert.ToString(Console.ReadLine());
+                    if(mot == "*")
+                    {
+                        mot = "";
+                    }
+                    Console.WriteLine(mot);
+                    index_tentative++;
+                    //Console.WriteLine(index_tentative);
                 }
-                Console.WriteLine(mot);
-                index_tentative++;
-                //Console.WriteLine(index_tentative);
-            }
-            while(mot == null || mot.Length == 0);
-            //while (mot == null || mot.Length < 2 || mot.Length > 15 ||_dicho.RechDichoRecursif(mot, 0, _dicho.MotsTrie[mot.Length].Length));
-            //index_tentative < 5// && txt == null || txt.Length == 0);
+                while(mot == null || mot.Length == 0);
+                //while (mot == null || mot.Length < 2 || mot.Length > 15 ||_dicho.RechDichoRecursif(mot, 0, _dicho.MotsTrie[mot.Length].Length));
+                //index_tentative < 5// && txt == null || txt.Length == 0);
 
-            return mot;
-            */
+                return mot;
+                */ 
+            #endregion
         }
         //isletter
         public static bool VerifieChar(char lettre)
         {
             bool possible = false;
-            if(lettre>=65 && lettre <= 90)
+            if (lettre >= 65 && lettre <= 90)
             {
                 possible = true;
             }
             return possible;
-        }
+        } 
+        #endregion
 
         /// <summary>
         /// Séries de méthodes qui demandent des modes de jeux différents
@@ -91,7 +96,7 @@ namespace Scrabble
         /// <returns></returns>
         #region Asks
 
-        
+
         public static string AskLanguage()
         {
             string[] menu = new string[] { "Francais", "English", "Español" };
@@ -117,7 +122,7 @@ namespace Scrabble
         {
             int init = 0;
 
-            
+            //Ajouter une IA
             string[] menu = new string[2] { "Ajouter un joueur", "Commencer la partie" };
 
             int index = Menu(menu);
@@ -169,8 +174,21 @@ namespace Scrabble
             // 1 : verticale
             return init;
         }
+        public static int AskTime(string phrase)
+        {
+            int timeLap = 0;
+            do
+            {
+                Console.Write(phrase);
+                timeLap = Convert.ToInt32(Console.ReadLine());
+            } while (timeLap < 1 || timeLap > 500);
+
+            return timeLap;
+        }
         #endregion
-        
+
+
+        #region Menu
         /// <summary>
         /// Méthode menu qui permet de faire des choix avec les flèches du clavier
         /// </summary>
@@ -218,26 +236,10 @@ namespace Scrabble
             ConsoleKey inputKey;
             int index = 0;
 
-            player.ToStringGame();
-            Console.SetCursorPosition(0, Console.CursorTop +2);
-            /*
             do
             {
-                player.ToStringGame();
-                Console.WriteLine("Voici votre main, appuier sur entrer pour continuer...");
-            } while (ConsoleKey.Enter != Console.ReadKey().Key);
-            */
-            do
-            {
-                int currentLineCursor = Console.CursorTop;
-
-                for (int j = 0; j < menu.Length; j++)
-                {
-                    Console.SetCursorPosition(0, Console.CursorTop - 1);
-                    Console.Write(new string(' ', Console.WindowWidth));
-                }
-                //Console.SetCursorPosition(0, currentLineCursor - menu.Length+1);
-
+                Console.Clear();
+                Console.WriteLine(player.ToStringGame());
 
                 for (int i = 0; i < menu.Length; i++)
                 {
@@ -252,24 +254,21 @@ namespace Scrabble
                     Console.ResetColor();
                 }
                 inputKey = Console.ReadKey().Key;
-                if (inputKey == ConsoleKey.DownArrow && index < menu.Length - 1)//40 : Down arrow key
-                {
+                if (inputKey == ConsoleKey.DownArrow && index < menu.Length - 1)
+                {//40 : Down arrow key
                     index++;
                 }
-                if (inputKey == ConsoleKey.UpArrow && index > 0)//38 : Up arrow key
-                {
+                if (inputKey == ConsoleKey.UpArrow && index > 0)
+                {//38 : Up arrow key
                     index--;
                 }
-
-
-                player.ToStringGame();
 
             } while (inputKey != ConsoleKey.Enter);
             return index;
         }
 
         /// <summary>
-        /// Méthode qui remplace la foncion Console.Clear() mais en moin radicale
+        /// Méthode qui remplace la foncion Console.Clear() pour une ligne
         /// </summary>
         public static void ClearConsoleLine()
         {
@@ -277,15 +276,9 @@ namespace Scrabble
             Console.SetCursorPosition(0, Console.CursorTop);
             Console.Write(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(0, currentLineCursor);
-        }
-        public static void ClearConsoleLine2()
-        {
-            int currentLineCursor = Console.CursorTop;
-            Console.SetCursorPosition(0, Console.CursorTop-1);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, currentLineCursor-1);
-        }
-        
+        } 
+        #endregion
+
     }
     
 }

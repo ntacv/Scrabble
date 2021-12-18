@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Scrabble
 {
-    class Jeton
+    public class Jeton
     {
         char lettre; 
         int score;
@@ -22,9 +22,6 @@ namespace Scrabble
         public Jeton(char lettre)
         {
             this.lettre = lettre;
-
-            
-
         }
         
         #region Paramètres
@@ -50,8 +47,6 @@ namespace Scrabble
             string txt = lettre + ", " + score + ", " + nombre;
             return txt;
         }
-
-        
         public string ToStringSave()
         {
             string txt = lettre + ";" + score + ";" + nombre;

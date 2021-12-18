@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Scrabble
 {
-    class Plateau
+    public class Plateau
     {
         char[,] plateau;
 

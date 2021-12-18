@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Scrabble
 {
-    class Cursor
+    public class Cursor
     {
         //Cette à été crée pour permettre de se déplacer sur le plateau à l'aide des flèches
         Plateau lab;
