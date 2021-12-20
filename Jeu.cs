@@ -298,34 +298,38 @@ namespace Scrabble
                     mot = mot.ToUpper();
                     Console.WriteLine("votre mot \"" + mot + "\" est correct");
                     index++;
-                    
-                    
-                    //1er mot sur la case centrale
-                    if (indexTour > 0)
-                    {
-                        _curseur.AskMovm();
 
-                        #region Demande position
-                        /*
-                        int ligne;
-                        do
-                        {
-                            Console.WriteLine("Choisissez ligne");
-                            ligne = Convert.ToInt32(Console.ReadLine());
-                        } while (ligne < 0 || ligne > 14);
-                        int colonne;
-                        do
-                        {
-                            Console.WriteLine("Choisissez colonne");
-                            colonne = Convert.ToInt32(Console.ReadLine());
-                        } while (colonne < 0 || colonne > 14);
+                    _curseur.AskMovm();
+                    #region Premier cas différent et alternative
+                    /*
+                                //1er mot sur la case centrale
+                                if (indexTour > 0)
+                                {
+                                    _curseur.AskMovm();
 
-                        int[] pos = new int[] { ligne,colonne};
-                        _curseur.Position = pos;
-                        */
-                        #endregion
-                    }
-                    else { _curseur.Position = new int[] { 7, 7 }; }
+                                    #region Demande position
+
+                                    int ligne;
+                                    do
+                                    {
+                                        Console.WriteLine("Choisissez ligne");
+                                        ligne = Convert.ToInt32(Console.ReadLine());
+                                    } while (ligne < 0 || ligne > 14);
+                                    int colonne;
+                                    do
+                                    {
+                                        Console.WriteLine("Choisissez colonne");
+                                        colonne = Convert.ToInt32(Console.ReadLine());
+                                    } while (colonne < 0 || colonne > 14);
+
+                                    int[] pos = new int[] { ligne,colonne};
+                                    _curseur.Position = pos;
+
+                                    #endregion
+                                }
+                                else { _curseur.Position = new int[] { 7, 7 }; }
+                                */ 
+                    #endregion
 
                     orientation = Program.AskDirection();
 
