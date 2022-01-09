@@ -126,12 +126,14 @@ namespace Scrabble
             int init = 0;
 
             //Ajouter une IA
-            string[] menu = new string[2] { "Ajouter un joueur", "Commencer la partie" };
+            string[] menu = new string[] { "Ajouter un joueur", "Ajouter une IA", "Commencer la partie" };
 
             int index = Menu(menu);
             if (index == 1) init = 1;
+            if (index == 2) init = 2;
             //0 : Ajouter
-            //1 : Commencer
+            //1 : Ajouter IA
+            //2 : Commencer
             return init;
         }
         public static int AskTour(Joueur player, Plateau plateau, Cursor cursor)
