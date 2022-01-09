@@ -63,16 +63,17 @@ namespace Scrabble
             _curseur = new Cursor(_plateau);
             _sac_jetons = new Sac_Jetons(parts[1]);
 
-            //définition des joeurs
+            //définition des joueurs
             int add; int nb=0;
-            _joueurs = new List<Joueur> { };
+            _joueurs = new List<Joueur> {};
             do
             {
-                Joueur player = new Joueur();
+                Joueur player = new Joueur(false);//not AI
                 for(int i = 0; i < 8; i++)
                 {
                     player.Add_Main_Courante(_sac_jetons.Retire_Jeton(rdm));
                 }
+                // add player as AI
                 _joueurs.Add(player);
                 nb++;
                 add = Program.AskJoueur();
@@ -236,6 +237,9 @@ namespace Scrabble
             Random rdm = new Random();
 
             int choixTour = 0;
+
+            //start ai round
+            //if(player.AI) player.AIPlaceWord
 
             do
             {

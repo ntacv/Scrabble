@@ -10,6 +10,7 @@ namespace Scrabble
         //Attributs
         string nom;
         int score;
+        bool ai;
         List<string> mots;
         List<Jeton> main_Courante;
         List<Jeton> main_Courante_Save;
@@ -22,6 +23,10 @@ namespace Scrabble
         public int Score
         {
             get{ return score; }
+        }
+        public bool AI
+        {
+            get { return ai; }
         }
         public List<string> Mots
         {
@@ -39,11 +44,12 @@ namespace Scrabble
         #endregion
 
         //Constructeur
-        public Joueur()
+        public Joueur(bool ai)
         {
             string nom = Program.VerifieString("Veuillez saisir un nom : ");
             this.nom = nom;
             score = 0;
+            this.ai = ai;
             mots = new List<string> { };
             main_Courante = new List<Jeton> { };
             main_Courante_Save = new List<Jeton> { };
@@ -53,7 +59,7 @@ namespace Scrabble
         /// définie les joueurs a partir d'un tableau de joueurs;
         /// </summary>
         /// <param name="joueurs">tableau de lignes pour chaque joueurs</param>
-        public Joueur(string nom, int score, List<string> mots, List<Jeton> Main)
+        public Joueur(string nom, int score, bool ai, List<string> mots, List<Jeton> Main)
         {
             this.nom = nom;
             this.score = score;
@@ -61,6 +67,7 @@ namespace Scrabble
             {
                 this.mots = mots;
             }
+            this.ai = ai;
             else this.mots = new List<string> { };
             this.main_Courante = Main;
             this.main_Courante_Save = new List<Jeton> { };
@@ -202,5 +209,21 @@ namespace Scrabble
             }
         }
         #endregion
+
+        #region player AI
+        public bool AIPlaceWord(Plateau _plateau)
+        {
+            bool possible = false;
+
+
+
+
+            return possible;
+        }
+
+
+        #endregion
+
+
     }
 }
