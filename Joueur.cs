@@ -59,7 +59,7 @@ namespace Scrabble
         /// définie les joueurs a partir d'un tableau de joueurs;
         /// </summary>
         /// <param name="joueurs">tableau de lignes pour chaque joueurs</param>
-        public Joueur(string nom, int score, bool ai, List<string> mots, List<Jeton> Main)
+        public Joueur(string nom, int score, List<string> mots, List<Jeton> Main)
         {
             this.nom = nom;
             this.score = score;
@@ -67,7 +67,7 @@ namespace Scrabble
             {
                 this.mots = mots;
             }
-            this.ai = ai;
+            //this.ai = ai;
             else this.mots = new List<string> { };
             this.main_Courante = Main;
             this.main_Courante_Save = new List<Jeton> { };
